@@ -1,8 +1,8 @@
-import { Field, InputType, Int } from '@nestjs/graphql';
+import { Field, ID, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateUserPasswordInput {
-  @Field(() => Int)
+  @Field(() => ID)
   id: number;
 
   @Field(() => String, { description: 'Non Encrypted Password' })

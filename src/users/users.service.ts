@@ -11,14 +11,18 @@ import { UpdateUserPasswordInput } from './dto/update-user-password.input';
 import { User } from './entities/user.entity';
 import { UsersRepository } from './persistence/users.repository';
 import { UsersMapper } from './users.mapper';
+import { UserEntity } from './entities/user.entity.typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { GetUsersInput } from './dto/get-users.input';
 
 @Injectable()
 export class UsersService {
-
   private readonly mapper: UsersMapper;
 
   constructor(
-    @Inject() private readonly repository: UsersRepository,
+    @InjectRepository(UserEntity)
+    private readonly repository: UsersRepository,
   ) {
     this.mapper = new UsersMapper();
   }
@@ -39,8 +43,10 @@ export class UsersService {
     return this.mapper.entityToDomain(await this.repository.save(newEntity));
   }
 
-  async findAll(): Promise<User[]> {
-    return this.mapper.entitiesToDomains(await this.repository.find());
+  async findAll(userDto: GetUsersInput): Promise<User[]> {
+    return this.mapper.entitiesToDomains(
+      await this.repository.find({ where: userDto }),
+    );
   }
 
   async findOne(id: number): Promise<User> {
@@ -83,6 +89,6 @@ export class UsersService {
 
   async remove(id: number): Promise<boolean> {
     const deleteResult = await this.repository.delete({ id });
-    return (!!deleteResult.affected && deleteResult.affected > 0);
+    return !!deleteResult.affected && deleteResult.affected > 0;
   }
 }

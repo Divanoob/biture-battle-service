@@ -4,6 +4,7 @@ import { UpdateUserNameInput } from './dto/update-user-name.input';
 import { UpdateUserPasswordInput } from './dto/update-user-password.input';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
+import { GetUsersInput } from './dto/get-users.input';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -15,8 +16,8 @@ export class UsersResolver {
   }
 
   @Query(() => [User], { name: 'users' })
-  async findAll() {
-    return await this.usersService.findAll();
+  async findAll(@Args() userDto: GetUsersInput) {
+    return await this.usersService.findAll(userDto);
   }
 
   @Query(() => User, { name: 'user' })
@@ -25,13 +26,24 @@ export class UsersResolver {
   }
 
   @Mutation(() => Boolean)
-  async updateUserName(@Args('updateUserNameInput') updateUserNameInput: UpdateUserNameInput) {
-    return await this.usersService.updateName(updateUserNameInput.id, updateUserNameInput);
+  async updateUserName(
+    @Args('updateUserNameInput') updateUserNameInput: UpdateUserNameInput,
+  ) {
+    return await this.usersService.updateName(
+      updateUserNameInput.id,
+      updateUserNameInput,
+    );
   }
 
   @Mutation(() => Boolean)
-  async updateUserPassword(@Args('updateUserPasswordInput') updateUserPasswordInput: UpdateUserPasswordInput) {
-    return await this.usersService.updatePassword(updateUserPasswordInput.id, updateUserPasswordInput);
+  async updateUserPassword(
+    @Args('updateUserPasswordInput')
+    updateUserPasswordInput: UpdateUserPasswordInput,
+  ) {
+    return await this.usersService.updatePassword(
+      updateUserPasswordInput.id,
+      updateUserPasswordInput,
+    );
   }
 
   @Mutation(() => Boolean)

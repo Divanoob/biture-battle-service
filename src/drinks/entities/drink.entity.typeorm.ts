@@ -1,7 +1,13 @@
 import { UserEntity } from 'src/users/entities/user.entity.typeorm';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-@Entity("drinks")
+@Entity('drinks')
 export class DrinkEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -10,7 +16,7 @@ export class DrinkEntity {
   @JoinColumn()
   user: UserEntity;
 
-  @Column()
+  @Column({ type: 'float' })
   alcoholQuantity: number;
 
   @Column()

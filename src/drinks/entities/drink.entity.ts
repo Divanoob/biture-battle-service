@@ -6,12 +6,12 @@ export class Drink {
   @Field(() => Int, { description: 'Drink ID' })
   id: number;
 
-  @Field(() => User, { description: 'User' })
+  @Field(() => User, { description: 'User', nullable: true })
   user?: User;
-  
+
   @Field(() => Float, { description: 'Alcohol Quantity' })
   alcoholQuantity: number;
 
-  @Field(() => Date, { description: 'Date' })
+  @Field({ description: 'Date' })
   date: Date;
 }
