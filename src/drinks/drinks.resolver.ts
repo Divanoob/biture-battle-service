@@ -1,24 +1,20 @@
+import { Inject } from '@nestjs/common';
 import {
   Args,
   Info,
   Int,
   Mutation,
-  Parent,
   Query,
-  Resolver,
+  Resolver
 } from '@nestjs/graphql';
+import { GraphQLResolveInfo } from 'graphql';
+import { RelationMapper } from 'src/core/RelationMapper';
 import { DrinksService } from './drinks.service';
 import { CreateDrinkInput } from './dto/create-drink.input';
+import { GetDrinksInput } from './dto/get-drinks.input';
 import { UpdateDrinkInput } from './dto/update-drink.input';
 import { Drink } from './entities/drink.entity';
-import { GraphQLResolveInfo } from 'graphql';
-import { GraphRelationBuilder } from 'typeorm-relations-graphql';
-import { InjectDataSource } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
 import { DrinkEntity } from './entities/drink.entity.typeorm';
-import { GetDrinksInput } from './dto/get-drinks.input';
-import { RelationMapper } from 'src/core/RelationMapper';
-import { Inject } from '@nestjs/common';
 
 @Resolver(() => Drink)
 export class DrinksResolver {

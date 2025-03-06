@@ -1,5 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { PoolRecordEntryEntity } from 'src/pool-record-entries/entities/pool-record-entry.entity.typeorm';
+import { PoolRecordEntry } from 'src/pool-record-entries/entities/pool-record-entry.entity';
 
 @ObjectType()
 export class PoolRecord {
@@ -9,6 +9,6 @@ export class PoolRecord {
   @Field({ description: 'Record Date' })
   recordDate: Date;
 
-  @Field({ description: 'Pool Record Entries' })
-  entries: PoolRecordEntryEntity[];
+  @Field(() => [PoolRecordEntry], { description: 'Pool Record Entries' })
+  entries: PoolRecordEntry[];
 }
