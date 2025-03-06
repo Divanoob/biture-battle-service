@@ -4,6 +4,9 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DrinksModule } from './drinks/drinks.module';
 import { UsersModule } from './users/users.module';
+import { PoolsModule } from './pools/pools.module';
+import { PoolRecordsModule } from './pool-records/pool-records.module';
+import { PoolRecordEntriesModule } from './pool-record-entries/pool-record-entries.module';
 
 @Module({
   imports: [
@@ -23,6 +26,9 @@ import { UsersModule } from './users/users.module';
     }),
     DrinksModule,
     UsersModule,
+    PoolsModule,
+    PoolRecordsModule,
+    PoolRecordEntriesModule,
   ],
 })
 export class AppModule {}

@@ -1,0 +1,21 @@
+import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
+import { PoolRecord } from 'src/pool-records/entities/pool-record.entity';
+import { User } from 'src/users/entities/user.entity';
+
+@ObjectType()
+export class PoolRecordEntry {
+  @Field(() => ID, { description: 'Pool Record Entry ID' })
+  id: number;
+
+  @Field({ description: 'User' })
+  user: User;
+
+  @Field(() => Float, { description: 'User Alcohol Level in g/L' })
+  alcoholLevel: number;
+  
+  @Field(() => Float, { description: 'User Total Quantity of Alcohol in his body' })
+  alcoholQuantity: number;
+  
+  @Field({ description: 'Record' })
+  record: PoolRecord;
+}
