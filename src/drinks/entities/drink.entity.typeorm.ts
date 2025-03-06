@@ -16,9 +16,18 @@ export class DrinkEntity {
   @JoinColumn()
   user: UserEntity;
 
-  @Column({ type: 'float' })
-  alcoholQuantity: number;
-
   @Column()
   date: Date;
+
+  @Column({ nullable: true })
+  drinkName: string;
+
+  @Column({ nullable: true })
+  quantity: number;
+
+  @Column({ nullable: true })
+  alcoholConcentration: number;
+
+  @Column({ type: 'float' })
+  alcoholQuantity: number;
 }

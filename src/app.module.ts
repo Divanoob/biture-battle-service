@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { PoolsModule } from './pools/pools.module';
 import { PoolRecordsModule } from './pool-records/pool-records.module';
 import { PoolRecordEntriesModule } from './pool-record-entries/pool-record-entries.module';
+import { BeveragesModule } from './beverages/beverages.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { PoolRecordEntriesModule } from './pool-record-entries/pool-record-entri
     PoolsModule,
     PoolRecordsModule,
     PoolRecordEntriesModule,
+    BeveragesModule,
   ],
 })
 export class AppModule {}
