@@ -23,12 +23,12 @@ export class DrinkEntity {
   date: Date;
 
   @Column({ nullable: true })
-  drinkName: string;
+  drinkName?: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'float' })
   quantity: number;
 
-  @Column({ nullable: true })
+  @Column({ type: 'float' })
   alcoholConcentration: number;
 
   @Column({ type: 'float' })

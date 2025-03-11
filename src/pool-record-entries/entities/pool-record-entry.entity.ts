@@ -16,6 +16,6 @@ export class PoolRecordEntry {
   @Field(() => Float, { description: 'User Total Quantity of Alcohol in his body' })
   alcoholQuantity: number;
   
-  @Field(() => PoolRecord, { description: 'Record' })
-  record: PoolRecord;
+  @Field(() => PoolRecord, { description: 'Record', nullable: true })
+  record?: PoolRecord;
 }

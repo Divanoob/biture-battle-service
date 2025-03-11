@@ -1,8 +1,12 @@
 import { Module } from '@nestjs/common';
-import { BeveragesService } from './beverages.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { BeveragesResolver } from './beverages.resolver';
+import { BeveragesService } from './beverages.service';
+import { BeverageEntity } from './entities/beverage.entity.typeorm';
+import { BeveragesRepository } from './persistence/beverages.repository';
 
 @Module({
-  providers: [BeveragesResolver, BeveragesService],
+  imports: [TypeOrmModule.forFeature([BeverageEntity])],
+  providers: [BeveragesResolver, BeveragesService, BeveragesRepository],
 })
 export class BeveragesModule {}
