@@ -1,26 +1,50 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CRUDService, CRUDServiceOptions } from 'src/core/CRUDService';
+import { BeverageMapper } from './beverage.mapper';
 import { CreateBeverageInput } from './dto/create-beverage.input';
+import { FindAllBeveragesInput } from './dto/find-all-beverages.input';
+import { FindOneBeverageInput } from './dto/find-one-beverage.input';
+import { UpdateBeverageInput } from './dto/update-beverage-input';
+import { Beverage } from './entities/beverage.entity';
 import { BeverageEntity } from './entities/beverage.entity.typeorm';
 import { BeveragesRepository } from './persistence/beverages.repository';
 
+const exportServiceOptions: CRUDServiceOptions<
+  Beverage,
+  BeverageEntity,
+  CreateBeverageInput,
+  UpdateBeverageInput,
+  FindAllBeveragesInput,
+  FindOneBeverageInput,
+  BeveragesRepository
+> = {
+  domain: Beverage,
+  entity: BeverageEntity,
+  createDto: CreateBeverageInput,
+  updateDto: UpdateBeverageInput,
+  findAllDto: FindAllBeveragesInput,
+  findOneDto: FindOneBeverageInput,
+  repository: BeveragesRepository,
+  mapper: BeverageMapper,
+}
+
 @Injectable()
-export class BeveragesService {
-  constructor(@InjectRepository(BeverageEntity) private readonly repository: BeveragesRepository) { }
+export class BeveragesService extends CRUDService<
+  Beverage,
+  BeverageEntity,
+  CreateBeverageInput,
+  UpdateBeverageInput,
+  FindAllBeveragesInput,
+  FindOneBeverageInput,
+  BeveragesRepository
+> {
   
-  async create(createBeverageInput: CreateBeverageInput) {
-    return await this.repository.save(createBeverageInput);
+  async checkRelationsBeforeQuery(): Promise<boolean> {
+    return true;
   }
 
-  async findAll() {
-    return await this.repository.find();
-  }
-
-  async findOne(id: number) {
-    return await this.repository.findOne({ where: { id }});
-  }
-
-  async remove(id: number) {
-    return await this.repository.delete(id);
+  constructor(@InjectRepository(BeverageEntity) repository: BeveragesRepository) {
+    super(exportServiceOptions, repository);
   }
 }
