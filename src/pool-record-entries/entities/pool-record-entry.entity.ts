@@ -7,8 +7,8 @@ export class PoolRecordEntry {
   @Field(() => ID, { description: 'Pool Record Entry ID' })
   id: number;
 
-  @Field(() => User, { description: 'User' })
-  user: User;
+  @Field(() => User, { description: 'User', nullable: true })
+  user?: User;
 
   @Field(() => Float, { description: 'User Alcohol Level in g/L' })
   alcoholLevel: number;

@@ -1,26 +1,26 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateBeverageInput } from './dto/create-beverage.input';
-import { UpdateBeverageInput } from './dto/update-beverage.input';
+import { BeverageEntity } from './entities/beverage.entity.typeorm';
+import { BeveragesRepository } from './persistence/beverages.repository';
 
 @Injectable()
 export class BeveragesService {
-  create(createBeverageInput: CreateBeverageInput) {
-    return 'This action adds a new beverage';
+  constructor(@InjectRepository(BeverageEntity) private readonly repository: BeveragesRepository) { }
+  
+  async create(createBeverageInput: CreateBeverageInput) {
+    return await this.repository.save(createBeverageInput);
   }
 
-  findAll() {
-    return `This action returns all beverages`;
+  async findAll() {
+    return await this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} beverage`;
+  async findOne(id: number) {
+    return await this.repository.findOne({ where: { id }});
   }
 
-  update(id: number, updateBeverageInput: UpdateBeverageInput) {
-    return `This action updates a #${id} beverage`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} beverage`;
+  async remove(id: number) {
+    return await this.repository.delete(id);
   }
 }
