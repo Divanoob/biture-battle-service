@@ -5,7 +5,7 @@ import { User } from "src/users/entities/user.entity";
 import { UsersMapper } from "src/users/users.mapper";
 import { DeepPartial } from "typeorm";
 import { PoolRecordEntry } from "./entities/pool-record-entry.entity";
-import { PoolRecordEntryEntity } from "./entities/pool-record-entry.entity.typeorm";
+import { PoolRecordEntryEntity } from "./entities/pool-record-entry.typeorm.entity";
 
 
 export class PoolRecordEntriesMapper extends BaseMapper<PoolRecordEntry, PoolRecordEntryEntity> {

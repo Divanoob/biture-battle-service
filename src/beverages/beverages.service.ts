@@ -5,9 +5,9 @@ import { BeverageMapper } from './beverage.mapper';
 import { CreateBeverageInput } from './dto/create-beverage.input';
 import { FindAllBeveragesInput } from './dto/find-all-beverages.input';
 import { FindOneBeverageInput } from './dto/find-one-beverage.input';
-import { UpdateBeverageInput } from './dto/update-beverage-input';
+import { UpdateBeverageInput } from './dto/update-beverage.input';
 import { Beverage } from './entities/beverage.entity';
-import { BeverageEntity } from './entities/beverage.entity.typeorm';
+import { BeverageEntity } from './entities/beverage.typeorm.entity';
 import { BeveragesRepository } from './persistence/beverages.repository';
 
 const exportServiceOptions: CRUDServiceOptions<

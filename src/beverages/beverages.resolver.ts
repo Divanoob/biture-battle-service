@@ -6,7 +6,7 @@ import { BeveragesService } from './beverages.service';
 import { CreateBeverageInput } from './dto/create-beverage.input';
 import { FindAllBeveragesInput } from './dto/find-all-beverages.input';
 import { Beverage } from './entities/beverage.entity';
-import { BeverageEntity } from './entities/beverage.entity.typeorm';
+import { BeverageEntity } from './entities/beverage.typeorm.entity';
 
 @Resolver(() => Beverage)
 export class BeveragesResolver {

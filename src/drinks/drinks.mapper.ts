@@ -6,7 +6,7 @@ import { UserEntity } from "src/users/entities/user.entity.typeorm";
 import { UsersMapper } from "src/users/users.mapper";
 import { DeepPartial } from "typeorm";
 import { Drink } from "./entities/drink.entity";
-import { DrinkEntity } from "./entities/drink.entity.typeorm";
+import { DrinkEntity } from "./entities/drink.typeorm.entity";
 
 export class DrinksMapper extends BaseMapper<Drink, DrinkEntity> {
     

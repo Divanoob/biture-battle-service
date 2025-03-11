@@ -4,16 +4,16 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { MappedRelations } from 'src/core/RelationMapper';
+import { UserEntity } from 'src/users/entities/user.entity.typeorm';
 import { UsersRepository } from 'src/users/persistence/users.repository';
 import { DrinksMapper } from './drinks.mapper';
 import { CreateDrinkInput } from './dto/create-drink.input';
+import { GetDrinksInput } from './dto/get-drinks.input';
 import { UpdateDrinkInput } from './dto/update-drink.input';
 import { Drink } from './entities/drink.entity';
-import { DrinkEntity } from './entities/drink.entity.typeorm';
+import { DrinkEntity } from './entities/drink.typeorm.entity';
 import { DrinksRepository } from './persistence/drinks.repository';
-import { UserEntity } from 'src/users/entities/user.entity.typeorm';
-import { GetDrinksInput } from './dto/get-drinks.input';
-import { MappedRelations } from 'src/core/RelationMapper';
 
 @Injectable()
 export class DrinksService {

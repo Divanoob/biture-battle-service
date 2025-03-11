@@ -2,7 +2,7 @@ import { CRUDMapper } from "src/core/CRUDMapper";
 import { DeepPartial, FindOptionsWhere } from "typeorm";
 import { CreateBeverageInput } from "./dto/create-beverage.input";
 import { Beverage } from "./entities/beverage.entity";
-import { BeverageEntity } from "./entities/beverage.entity.typeorm";
+import { BeverageEntity } from "./entities/beverage.typeorm.entity";
 
 
 export class BeverageMapper extends CRUDMapper<Beverage, BeverageEntity, CreateBeverageInput, Beverage, Beverage, Beverage> {

@@ -5,7 +5,7 @@ import { UserEntity } from 'src/users/entities/user.entity.typeorm';
 import { UsersModule } from 'src/users/users.module';
 import { DrinksResolver } from './drinks.resolver';
 import { DrinksService } from './drinks.service';
-import { DrinkEntity } from './entities/drink.entity.typeorm';
+import { DrinkEntity } from './entities/drink.typeorm.entity';
 import { DrinksRepository } from './persistence/drinks.repository';
 
 @Module({
