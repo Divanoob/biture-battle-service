@@ -20,5 +20,5 @@ export class PoolRecordEntryEntity {
 
     @ManyToOne(() => PoolRecordEntity, poolRecord => poolRecord.entries)
     @JoinColumn()
-    record: PoolRecordEntity;
+    record?: PoolRecordEntity;
 }

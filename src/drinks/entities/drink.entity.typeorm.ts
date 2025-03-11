@@ -1,8 +1,11 @@
+import { PoolEntity } from 'src/pools/entities/pool.entity.typeorm';
 import { UserEntity } from 'src/users/entities/user.entity.typeorm';
 import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -14,7 +17,7 @@ export class DrinkEntity {
 
   @ManyToOne(() => UserEntity, (user) => user.id)
   @JoinColumn()
-  user: UserEntity;
+  user?: UserEntity;
 
   @Column()
   date: Date;
@@ -30,4 +33,8 @@ export class DrinkEntity {
 
   @Column({ type: 'float' })
   alcoholQuantity: number;
+
+  @ManyToMany(() => PoolEntity, (pool) => pool.drinks)
+  @JoinTable()
+  pools?: PoolEntity[];
 }

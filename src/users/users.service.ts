@@ -1,6 +1,5 @@
 import {
   BadRequestException,
-  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -13,7 +12,6 @@ import { UsersRepository } from './persistence/users.repository';
 import { UsersMapper } from './users.mapper';
 import { UserEntity } from './entities/user.entity.typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { GetUsersInput } from './dto/get-users.input';
 
 @Injectable()

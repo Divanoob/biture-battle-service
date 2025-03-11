@@ -1,5 +1,4 @@
 import { ArgsType, Field, Float, ID, Int } from '@nestjs/graphql';
-import { User } from 'src/users/entities/user.entity';
 
 @ArgsType()
 export class GetDrinksInput {

@@ -1,4 +1,4 @@
-import { ArgsType, Field, Float, ID, Int } from '@nestjs/graphql';
+import { ArgsType, Field, ID } from '@nestjs/graphql';
 
 @ArgsType()
 export class GetUsersInput {

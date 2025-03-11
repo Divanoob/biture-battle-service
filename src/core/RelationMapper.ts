@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { GraphQLResolveInfo } from 'graphql';
 import {
@@ -15,7 +15,7 @@ export type MappedRelations<T> = FindOptionsRelations<T>;
 export class RelationMapper<T extends Record<string, any>> {
   private graphRelationBuilder: GraphRelationBuilder;
 
-  constructor(@InjectDataSource() private readonly dataSource: DataSource) {
+  constructor(@InjectDataSource() dataSource: DataSource) {
     this.graphRelationBuilder = new GraphRelationBuilder(dataSource);
   }
 

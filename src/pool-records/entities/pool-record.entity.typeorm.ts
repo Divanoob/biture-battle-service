@@ -1,5 +1,6 @@
 import { PoolRecordEntryEntity } from "src/pool-record-entries/entities/pool-record-entry.entity.typeorm";
-import { CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { PoolEntity } from "src/pools/entities/pool.entity.typeorm";
+import { CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 
@@ -12,5 +13,9 @@ export class PoolRecordEntity {
     recordDate: Date;
 
     @OneToMany(() => PoolRecordEntryEntity, poolRecordEntry => poolRecordEntry.record)
-    entries: PoolRecordEntryEntity[];
+    entries?: PoolRecordEntryEntity[];
+
+    @ManyToOne(() => PoolEntity, pool => pool.records)
+    @JoinColumn()
+    pool?: PoolEntity;
 }

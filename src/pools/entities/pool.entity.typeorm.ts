@@ -1,5 +1,7 @@
+import { DrinkEntity } from "src/drinks/entities/drink.entity.typeorm";
+import { PoolRecordEntity } from "src/pool-records/entities/pool-record.entity.typeorm";
 import { UserEntity } from "src/users/entities/user.entity.typeorm";
-import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 
@@ -10,11 +12,17 @@ export class PoolEntity {
 
     @ManyToMany(() => UserEntity, user => user.pools)
     @JoinTable()
-    users: UserEntity[];
+    users?: UserEntity[];
 
     @CreateDateColumn()
     creationDate: Date;
 
     @Column({ default: true })
     isOpen: boolean;
+
+    @ManyToMany(() => DrinkEntity, drink => drink.pools)
+    drinks?: DrinkEntity[];
+
+    @OneToMany(() => PoolRecordEntity, poolRecord => poolRecord.pool)
+    records?: PoolRecordEntity[];
 }

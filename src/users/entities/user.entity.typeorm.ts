@@ -18,11 +18,11 @@ export class UserEntity {
   encryptedPassword: string;
 
   @OneToMany(() => DrinkEntity, (drink) => drink.user)
-  drinks: DrinkEntity[];
+  drinks?: DrinkEntity[];
 
   @ManyToMany(() => PoolEntity, (pool) => pool.users)
-  pools: PoolEntity[];
+  pools?: PoolEntity[];
 
   @OneToMany(() => PoolRecordEntryEntity, (poolRecordEntry) => poolRecordEntry.user)
-  poolRecordEntries: PoolRecordEntryEntity[];
+  poolRecordEntries?: PoolRecordEntryEntity[];
 }
