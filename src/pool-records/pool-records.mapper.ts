@@ -14,7 +14,7 @@ export class PoolRecordsMapper extends BaseMapper<PoolRecord, PoolRecordEntity> 
     async entityToDomain(entity: PoolRecordEntity): Promise<PoolRecord> {
         let entries: PoolRecordEntry[] | undefined = undefined;
         if (entity.entries) {
-            const entriesMapper = new PoolRecordEntriesMapper();
+            const entriesMapper = new PoolRecordEntriesMapper({ domain: PoolRecordEntry});
             entries = await entriesMapper.entitiesToDomains(entity.entries);
         }
         let pool: Pool | undefined = undefined;

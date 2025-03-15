@@ -19,7 +19,7 @@ export class PoolsMapper extends BaseMapper<Pool, PoolEntity> {
         }
         let drinks: Drink[] | undefined = undefined;
         if(entity.drinks) {
-            const drinksMapper = new DrinksMapper();
+            const drinksMapper = new DrinksMapper({ domain: Drink });
             drinks = await drinksMapper.entitiesToDomains(entity.drinks);
         }
         let records: PoolRecord[] | undefined = undefined;

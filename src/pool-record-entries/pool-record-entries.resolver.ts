@@ -15,21 +15,21 @@ export class PoolRecordEntriesResolver {
 
   @Query(() => [PoolRecordEntry], { name: 'poolRecordEntries' })
   findAll() {
-    return this.poolRecordEntriesService.findAll();
+    return this.poolRecordEntriesService.findAll({}, {});
   }
 
   @Query(() => PoolRecordEntry, { name: 'poolRecordEntry' })
   findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.poolRecordEntriesService.findOne(id);
+    return this.poolRecordEntriesService.findOne({ id }, {});
   }
 
   @Mutation(() => PoolRecordEntry)
   updatePoolRecordEntry(@Args('updatePoolRecordEntryInput') updatePoolRecordEntryInput: UpdatePoolRecordEntryInput) {
-    return this.poolRecordEntriesService.update(updatePoolRecordEntryInput.id, updatePoolRecordEntryInput);
+    return this.poolRecordEntriesService.update({ id: updatePoolRecordEntryInput.id }, updatePoolRecordEntryInput);
   }
 
   @Mutation(() => PoolRecordEntry)
   removePoolRecordEntry(@Args('id', { type: () => Int }) id: number) {
-    return this.poolRecordEntriesService.remove(id);
+    return this.poolRecordEntriesService.remove({ id });
   }
 }

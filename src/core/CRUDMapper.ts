@@ -4,19 +4,9 @@ import { DeepPartial, FindOptionsWhere, ObjectLiteral } from "typeorm";
 import { BaseMapper } from "./BaseMapper";
 
 export interface CRUDMapperOptions<
-    Domain,
-    Entity extends ObjectLiteral,
-    CreateDto extends DeepPartial<Domain>,
-    UpdateDto extends DeepPartial<Domain>,
-    FindAllDto extends FindOptionsWhere<Entity>,
-    FindOneDto extends FindOptionsWhere<Entity>,
+    Domain
 > {
     domain: Type<Domain>;
-    entity: Type<Entity>;
-    createDto: Type<CreateDto>;
-    updateDto: Type<UpdateDto>;
-    findAllDto: Type<FindAllDto>;
-    findOneDto: Type<FindOneDto>;
 }
 
 export abstract class CRUDMapper<
@@ -33,7 +23,7 @@ export abstract class CRUDMapper<
     
     private readonly domain: Type<Domain>;
     
-    constructor({ domain }: CRUDMapperOptions<Domain, Entity, CreateDto, UpdateDto, FindAllDto, FindOneDto>) {
+    constructor({ domain }: CRUDMapperOptions<Domain>) {
         super();
         this.domain = domain;
     }

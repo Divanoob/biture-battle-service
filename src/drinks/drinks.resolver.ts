@@ -9,7 +9,7 @@ import {
 } from '@nestjs/graphql';
 import { GraphQLResolveInfo } from 'graphql';
 import { RelationMapper } from 'src/core/RelationMapper';
-import DrinksService from './drinks.service';
+import { DrinksService } from './drinks.service';
 import { CreateDrinkInput } from './dto/create-drink.input';
 import { GetDrinksInput } from './dto/get-drinks.input';
 import { UpdateDrinkInput } from './dto/update-drink.input';
@@ -48,7 +48,7 @@ export class DrinksResolver {
     @Info() info: GraphQLResolveInfo,
   ) {
     return await this.drinksService.findOne(
-      id,
+      { id },
       this.relationMapper.map(DrinkEntity, info),
     );
   }
@@ -58,13 +58,13 @@ export class DrinksResolver {
     @Args('updateDrinkInput') updateDrinkInput: UpdateDrinkInput,
   ) {
     return await this.drinksService.update(
-      updateDrinkInput.id,
+      { id: updateDrinkInput.id },
       updateDrinkInput,
     );
   }
 
   @Mutation(() => Boolean)
   async removeDrink(@Args('id', { type: () => Int }) id: number) {
-    return await this.drinksService.remove(id);
+    return await this.drinksService.remove({ id });
   }
 }
