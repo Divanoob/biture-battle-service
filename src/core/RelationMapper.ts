@@ -1,3 +1,4 @@
+/* eslint-disable @darraghor/nestjs-typed/injectable-should-be-provided */
 import { Injectable } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { GraphQLResolveInfo } from 'graphql';
@@ -12,6 +13,7 @@ import { GraphRelationBuilder } from 'typeorm-relations-graphql';
 export type MappedRelations<T> = FindOptionsRelations<T>;
 
 @Injectable()
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class RelationMapper<T extends Record<string, any>> {
   private graphRelationBuilder: GraphRelationBuilder;
 

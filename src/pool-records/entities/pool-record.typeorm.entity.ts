@@ -1,5 +1,5 @@
-import { PoolRecordEntryEntity } from "src/pool-record-entries/entities/pool-record-entry.entity.typeorm";
-import { PoolEntity } from "src/pools/entities/pool.entity.typeorm";
+import { PoolRecordEntryEntity } from "src/pool-record-entries/entities/pool-record-entry.typeorm.entity";
+import { PoolEntity } from "src/pools/entities/pool.typeorm.entity";
 import { CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 

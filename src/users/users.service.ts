@@ -3,16 +3,16 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { CreateUserInput } from './dto/create-user.input';
+import { GetUsersInput } from './dto/get-users.input';
 import { UpdateUserNameInput } from './dto/update-user-name.input';
 import { UpdateUserPasswordInput } from './dto/update-user-password.input';
-import { User } from './entities/user.entity';
+import { User } from './entities/user.graphql.entity';
+import { UserEntity } from './entities/user.typeorm.entity';
 import { UsersRepository } from './persistence/users.repository';
 import { UsersMapper } from './users.mapper';
-import { UserEntity } from './entities/user.entity.typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-import { GetUsersInput } from './dto/get-users.input';
 
 @Injectable()
 export class UsersService {

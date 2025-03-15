@@ -5,7 +5,7 @@ import { RelationMapper } from 'src/core/RelationMapper';
 import { BeveragesService } from './beverages.service';
 import { CreateBeverageInput } from './dto/create-beverage.input';
 import { FindAllBeveragesInput } from './dto/find-all-beverages.input';
-import { Beverage } from './entities/beverage.entity';
+import { Beverage } from './entities/beverage.graphql.entity';
 import { BeverageEntity } from './entities/beverage.typeorm.entity';
 
 @Resolver(() => Beverage)

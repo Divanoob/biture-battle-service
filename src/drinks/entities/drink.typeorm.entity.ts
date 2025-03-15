@@ -1,5 +1,5 @@
-import { PoolEntity } from 'src/pools/entities/pool.entity.typeorm';
-import { UserEntity } from 'src/users/entities/user.entity.typeorm';
+import { PoolEntity } from 'src/pools/entities/pool.typeorm.entity';
+import { UserEntity } from 'src/users/entities/user.typeorm.entity';
 import {
   Column,
   Entity,

@@ -1,11 +1,11 @@
 import { BaseMapper } from "src/core/BaseMapper";
-import { Pool } from "src/pools/entities/pool.entity";
+import { Pool } from "src/pools/entities/pool.graphql.entity";
 import { PoolsMapper } from "src/pools/pools.mapper";
-import { User } from "src/users/entities/user.entity";
-import { UserEntity } from "src/users/entities/user.entity.typeorm";
+import { User } from "src/users/entities/user.graphql.entity";
+import { UserEntity } from "src/users/entities/user.typeorm.entity";
 import { UsersMapper } from "src/users/users.mapper";
 import { DeepPartial } from "typeorm";
-import { Drink } from "./entities/drink.entity";
+import { Drink } from "./entities/drink.graphql.entity";
 import { DrinkEntity } from "./entities/drink.typeorm.entity";
 
 export class DrinksMapper extends BaseMapper<Drink, DrinkEntity> {

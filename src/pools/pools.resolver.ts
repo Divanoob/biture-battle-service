@@ -1,7 +1,7 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreatePoolInput } from './dto/create-pool.input';
 import { UpdatePoolInput } from './dto/update-pool.input';
-import { Pool } from './entities/pool.entity';
+import { Pool } from './entities/pool.graphql.entity';
 import { PoolsService } from './pools.service';
 
 @Resolver(() => Pool)

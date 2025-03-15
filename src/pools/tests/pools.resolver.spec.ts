@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PoolsResolver } from './pools.resolver';
-import { PoolsService } from './pools.service';
+import { PoolsResolver } from '../pools.resolver';
+import { PoolsService } from '../pools.service';
 
 describe('PoolsResolver', () => {
   let resolver: PoolsResolver;

@@ -1,12 +1,12 @@
 import { BaseMapper } from "src/core/BaseMapper";
 import { DrinksMapper } from "src/drinks/drinks.mapper";
-import { Drink } from "src/drinks/entities/drink.entity";
-import { PoolRecord } from "src/pool-records/entities/pool-record.entity";
+import { Drink } from "src/drinks/entities/drink.graphql.entity";
+import { PoolRecord } from "src/pool-records/entities/pool-record.graphql.entity";
 import { PoolRecordsMapper } from "src/pool-records/pool-records.mapper";
-import { User } from "src/users/entities/user.entity";
+import { User } from "src/users/entities/user.graphql.entity";
 import { UsersMapper } from "src/users/users.mapper";
-import { Pool } from "./entities/pool.entity";
-import { PoolEntity } from "./entities/pool.entity.typeorm";
+import { Pool } from "./entities/pool.graphql.entity";
+import { PoolEntity } from "./entities/pool.typeorm.entity";
 
 
 export class PoolsMapper extends BaseMapper<Pool, PoolEntity> {
@@ -14,17 +14,17 @@ export class PoolsMapper extends BaseMapper<Pool, PoolEntity> {
     async entityToDomain(entity: PoolEntity): Promise<Pool> {
         let users: User[] | undefined = undefined;
         if (entity.users) {
-            let userMapper = new UsersMapper();
+            const userMapper = new UsersMapper();
             users = await userMapper.entitiesToDomains(entity.users);
         }
         let drinks: Drink[] | undefined = undefined;
         if(entity.drinks) {
-            let drinksMapper = new DrinksMapper();
+            const drinksMapper = new DrinksMapper();
             drinks = await drinksMapper.entitiesToDomains(entity.drinks);
         }
         let records: PoolRecord[] | undefined = undefined;
         if (entity.records) {
-            let recordMapper = new PoolRecordsMapper();
+            const recordMapper = new PoolRecordsMapper();
             records = await recordMapper.entitiesToDomains(entity.records);
         }
         return {

@@ -13,7 +13,7 @@ import { DrinksService } from './drinks.service';
 import { CreateDrinkInput } from './dto/create-drink.input';
 import { GetDrinksInput } from './dto/get-drinks.input';
 import { UpdateDrinkInput } from './dto/update-drink.input';
-import { Drink } from './entities/drink.entity';
+import { Drink } from './entities/drink.graphql.entity';
 import { DrinkEntity } from './entities/drink.typeorm.entity';
 
 @Resolver(() => Drink)

@@ -1,5 +1,5 @@
-import { PoolRecordEntity } from "src/pool-records/entities/pool-record.entity.typeorm";
-import { UserEntity } from "src/users/entities/user.entity.typeorm";
+import { PoolRecordEntity } from "src/pool-records/entities/pool-record.typeorm.entity";
+import { UserEntity } from "src/users/entities/user.typeorm.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 
@@ -10,7 +10,8 @@ export class PoolRecordEntryEntity {
     id: number;
 
     @OneToOne(() => UserEntity)
-    user: UserEntity;
+    @JoinColumn()
+    user?: UserEntity;
 
     @Column()
     alcoholLevel: number;

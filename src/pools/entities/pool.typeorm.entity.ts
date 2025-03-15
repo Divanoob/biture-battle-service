@@ -1,6 +1,6 @@
-import { DrinkEntity } from "src/drinks/entities/drink.entity.typeorm";
-import { PoolRecordEntity } from "src/pool-records/entities/pool-record.entity.typeorm";
-import { UserEntity } from "src/users/entities/user.entity.typeorm";
+import { DrinkEntity } from "src/drinks/entities/drink.typeorm.entity";
+import { PoolRecordEntity } from "src/pool-records/entities/pool-record.typeorm.entity";
+import { UserEntity } from "src/users/entities/user.typeorm.entity";
 import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 

@@ -6,7 +6,7 @@ import { CreateBeverageInput } from './dto/create-beverage.input';
 import { FindAllBeveragesInput } from './dto/find-all-beverages.input';
 import { FindOneBeverageInput } from './dto/find-one-beverage.input';
 import { UpdateBeverageInput } from './dto/update-beverage.input';
-import { Beverage } from './entities/beverage.entity';
+import { Beverage } from './entities/beverage.graphql.entity';
 import { BeverageEntity } from './entities/beverage.typeorm.entity';
 import { BeveragesRepository } from './persistence/beverages.repository';
 

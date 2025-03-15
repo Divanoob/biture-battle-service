@@ -1,6 +1,6 @@
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
-import { PoolRecord } from 'src/pool-records/entities/pool-record.entity';
-import { User } from 'src/users/entities/user.entity';
+import { PoolRecord } from 'src/pool-records/entities/pool-record.graphql.entity';
+import { User } from 'src/users/entities/user.graphql.entity';
 
 @ObjectType()
 export class PoolRecordEntry {

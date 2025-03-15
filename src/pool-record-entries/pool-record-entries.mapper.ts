@@ -1,10 +1,10 @@
 import { BaseMapper } from "src/core/BaseMapper";
-import { PoolRecord } from "src/pool-records/entities/pool-record.entity";
+import { PoolRecord } from "src/pool-records/entities/pool-record.graphql.entity";
 import { PoolRecordsMapper } from "src/pool-records/pool-records.mapper";
-import { User } from "src/users/entities/user.entity";
+import { User } from "src/users/entities/user.graphql.entity";
 import { UsersMapper } from "src/users/users.mapper";
 import { DeepPartial } from "typeorm";
-import { PoolRecordEntry } from "./entities/pool-record-entry.entity";
+import { PoolRecordEntry } from "./entities/pool-record-entry.graphql.entity";
 import { PoolRecordEntryEntity } from "./entities/pool-record-entry.typeorm.entity";
 
 

@@ -14,7 +14,14 @@ export default tseslint.config(
             'unused-imports': unusedImports,
         },
         rules: {
-            'unused-imports/no-unused-imports': 'warn',
+            'unused-imports/no-unused-imports': 'error',
+            '@typescript-eslint/no-misused-spread': 'off',
+            'require-await': 'off',
+            '@typescript-eslint/require-await': 'off',
+            '@typescript-eslint/no-extraneous-class': 'off',
+            'no-unused-vars': 'off',
+            '@typescript-eslint/no-unused-vars': 'warn',
+            '@typescript-eslint/restrict-template-expressions': 'off',
         },
         languageOptions: {
             globals: {

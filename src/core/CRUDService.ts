@@ -3,7 +3,7 @@ import { DeepPartial, ObjectLiteral, Repository } from "typeorm";
 import { CRUDMapper } from "./CRUDMapper";
 import { MappedRelations } from "./RelationMapper";
 
-export type CRUDServiceOptions<
+export interface CRUDServiceOptions<
     Domain,
     Entity extends ObjectLiteral,
     CreateDto extends DeepPartial<Domain>,
@@ -11,7 +11,7 @@ export type CRUDServiceOptions<
     FindAllDto,
     FindOneDto,
     MyRepository extends Repository<Entity>
-> = {
+> {
     domain: Type<Domain>;
     entity: Type<Entity>;
     createDto: Type<CreateDto>;

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PoolEntity } from 'src/pools/entities/pool.entity.typeorm';
+import { PoolEntity } from 'src/pools/entities/pool.typeorm.entity';
 import { PoolsModule } from 'src/pools/pools.module';
-import { PoolRecordEntity } from './entities/pool-record.entity.typeorm';
+import { PoolRecordEntity } from './entities/pool-record.typeorm.entity';
 import { PoolRecordsRepository } from './persistence/pool-records.repository';
 import { PoolRecordsResolver } from './pool-records.resolver';
 import { PoolRecordsService } from './pool-records.service';

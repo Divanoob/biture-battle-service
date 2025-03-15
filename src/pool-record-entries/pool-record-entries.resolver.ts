@@ -1,8 +1,8 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { PoolRecordEntriesService } from './pool-record-entries.service';
-import { PoolRecordEntry } from './entities/pool-record-entry.entity';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreatePoolRecordEntryInput } from './dto/create-pool-record-entry.input';
 import { UpdatePoolRecordEntryInput } from './dto/update-pool-record-entry.input';
+import { PoolRecordEntry } from './entities/pool-record-entry.graphql.entity';
+import { PoolRecordEntriesService } from './pool-record-entries.service';
 
 @Resolver(() => PoolRecordEntry)
 export class PoolRecordEntriesResolver {

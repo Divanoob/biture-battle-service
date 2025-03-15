@@ -1,6 +1,7 @@
 import { DeepPartial, FindOptionsWhere } from "typeorm";
 import { BaseMapper } from "./BaseMapper";
 
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export abstract class CRUDMapper<Domain, Entity, CreateDto, UpdateDto, FindAllDto, FindOneDto> extends BaseMapper<Domain, Entity> {
     abstract createDtoToDomain(createDto: CreateDto): Promise<Domain>;
     abstract updateDtoToDomain(updateDto: UpdateDto): Promise<Domain>;

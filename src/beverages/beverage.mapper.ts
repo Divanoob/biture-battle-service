@@ -1,7 +1,7 @@
 import { CRUDMapper } from "src/core/CRUDMapper";
 import { DeepPartial, FindOptionsWhere } from "typeorm";
 import { CreateBeverageInput } from "./dto/create-beverage.input";
-import { Beverage } from "./entities/beverage.entity";
+import { Beverage } from "./entities/beverage.graphql.entity";
 import { BeverageEntity } from "./entities/beverage.typeorm.entity";
 
 

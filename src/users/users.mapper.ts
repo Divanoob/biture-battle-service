@@ -1,7 +1,7 @@
 import { BaseMapper } from "src/core/BaseMapper";
 import { DeepPartial } from "typeorm";
-import { User } from "./entities/user.entity";
-import { UserEntity } from "./entities/user.entity.typeorm";
+import { User } from "./entities/user.graphql.entity";
+import { UserEntity } from "./entities/user.typeorm.entity";
 
 
 

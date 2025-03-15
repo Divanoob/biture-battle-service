@@ -5,13 +5,13 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MappedRelations } from 'src/core/RelationMapper';
-import { UserEntity } from 'src/users/entities/user.entity.typeorm';
+import { UserEntity } from 'src/users/entities/user.typeorm.entity';
 import { UsersRepository } from 'src/users/persistence/users.repository';
 import { DrinksMapper } from './drinks.mapper';
 import { CreateDrinkInput } from './dto/create-drink.input';
 import { GetDrinksInput } from './dto/get-drinks.input';
 import { UpdateDrinkInput } from './dto/update-drink.input';
-import { Drink } from './entities/drink.entity';
+import { Drink } from './entities/drink.graphql.entity';
 import { DrinkEntity } from './entities/drink.typeorm.entity';
 import { DrinksRepository } from './persistence/drinks.repository';
 

@@ -1,6 +1,6 @@
-import { DrinkEntity } from 'src/drinks/entities/drink.entity.typeorm';
-import { PoolRecordEntryEntity } from 'src/pool-record-entries/entities/pool-record-entry.entity.typeorm';
-import { PoolEntity } from 'src/pools/entities/pool.entity.typeorm';
+import { DrinkEntity } from 'src/drinks/entities/drink.typeorm.entity';
+import { PoolRecordEntryEntity } from 'src/pool-record-entries/entities/pool-record-entry.typeorm.entity';
+import { PoolEntity } from 'src/pools/entities/pool.typeorm.entity';
 import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity("users")
