@@ -49,7 +49,7 @@ export abstract class CRUDService<
     >;
     
     constructor(
-        exportServiceOptions: CRUDServiceOptions<
+        { mapper, domain }: CRUDServiceOptions<
             Domain,
             Entity,
             CreateDto,
@@ -60,7 +60,7 @@ export abstract class CRUDService<
         >,
         private readonly repository: MyRepository
     ) {
-        this.mapper = new exportServiceOptions.mapper();
+        this.mapper = new mapper({ domain});
     }
 
     abstract checkRelationsBeforeQuery(): Promise<boolean>;
