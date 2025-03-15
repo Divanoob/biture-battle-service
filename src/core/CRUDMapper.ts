@@ -1,10 +1,52 @@
-import { DeepPartial, FindOptionsWhere } from "typeorm";
+ 
+import { Type } from "@nestjs/common";
+import { DeepPartial, FindOptionsWhere, ObjectLiteral } from "typeorm";
 import { BaseMapper } from "./BaseMapper";
 
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
-export abstract class CRUDMapper<Domain, Entity, CreateDto, UpdateDto, FindAllDto, FindOneDto> extends BaseMapper<Domain, Entity> {
-    abstract createDtoToDomain(createDto: CreateDto): Promise<Domain>;
-    abstract updateDtoToDomain(updateDto: UpdateDto): Promise<Domain>;
+export interface CRUDMapperOptions<
+    Domain,
+    Entity extends ObjectLiteral,
+    CreateDto extends DeepPartial<Domain>,
+    UpdateDto extends DeepPartial<Domain>,
+    FindAllDto extends FindOptionsWhere<Entity>,
+    FindOneDto extends FindOptionsWhere<Entity>,
+> {
+    domain: Type<Domain>;
+    entity: Type<Entity>;
+    createDto: Type<CreateDto>;
+    updateDto: Type<UpdateDto>;
+    findAllDto: Type<FindAllDto>;
+    findOneDto: Type<FindOneDto>;
+}
+
+export abstract class CRUDMapper<
+    Domain,
+    Entity extends ObjectLiteral,
+    CreateDto extends DeepPartial<Domain>,
+    UpdateDto extends DeepPartial<Domain>,
+    FindAllDto extends FindOptionsWhere<Entity>,
+    FindOneDto extends FindOptionsWhere<Entity>,
+> extends BaseMapper<
+    Domain,
+    Entity
+> {
+    
+    private readonly domain: Type<Domain>;
+    
+    constructor({ domain }: CRUDMapperOptions<Domain, Entity, CreateDto, UpdateDto, FindAllDto, FindOneDto>) {
+        super();
+        this.domain = domain;
+    }
+    
+    async createDtoToDomain(createDto: CreateDto): Promise<Domain> {
+        const domain = new this.domain();
+        return { ...domain, ...createDto };
+    }
+
+    async updateDtoToDomain(updateDto: UpdateDto): Promise<Domain> {
+        const domain = new this.domain();
+        return { ...domain, ...updateDto };
+    }
 
     async createDtoToEntity(createDto: CreateDto): Promise<DeepPartial<Entity>> {
         return await this.domainToEntity(await this.createDtoToDomain(createDto));
@@ -14,6 +56,11 @@ export abstract class CRUDMapper<Domain, Entity, CreateDto, UpdateDto, FindAllDt
         return await this.domainToEntity(await this.updateDtoToDomain(updateDto));
     }
 
-    abstract findAllDtoToEntity(findDto: FindAllDto): Promise<FindOptionsWhere<Entity>>;
-    abstract findOneDtoToEntity(findOneDto: FindOneDto): Promise<FindOptionsWhere<Entity>>;
+    async findAllDtoToEntity(findDto: FindAllDto): Promise<FindOptionsWhere<Entity>> {
+        return findDto;
+    }
+
+    async findOneDtoToEntity(findOneDto: FindOneDto): Promise<FindOptionsWhere<Entity>> {
+        return findOneDto;
+    }
 }

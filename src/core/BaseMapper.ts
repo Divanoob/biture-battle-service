@@ -1,7 +1,10 @@
-import { DeepPartial } from "typeorm";
+import { DeepPartial, ObjectLiteral } from "typeorm";
 
 
-export abstract class BaseMapper<Domain, Entity> {
+export abstract class BaseMapper<
+    Domain,
+    Entity extends ObjectLiteral
+> {
     abstract entityToDomain(entity: Entity): Promise<Domain>;
     abstract domainToEntity(domain: Domain): Promise<DeepPartial<Entity>>;
 

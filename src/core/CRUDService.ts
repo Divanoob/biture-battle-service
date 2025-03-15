@@ -1,5 +1,5 @@
 import { NotFoundException, Type } from "@nestjs/common";
-import { DeepPartial, ObjectLiteral, Repository } from "typeorm";
+import { DeepPartial, FindOptionsWhere, ObjectLiteral, Repository } from "typeorm";
 import { CRUDMapper } from "./CRUDMapper";
 import { MappedRelations } from "./RelationMapper";
 
@@ -8,8 +8,8 @@ export interface CRUDServiceOptions<
     Entity extends ObjectLiteral,
     CreateDto extends DeepPartial<Domain>,
     UpdateDto extends DeepPartial<Domain>,
-    FindAllDto,
-    FindOneDto,
+    FindAllDto extends FindOptionsWhere<Entity>,
+    FindOneDto extends FindOptionsWhere<Entity>,
     MyRepository extends Repository<Entity>
 > {
     domain: Type<Domain>;
@@ -34,9 +34,10 @@ export abstract class CRUDService<
     Entity extends ObjectLiteral,
     CreateDto extends DeepPartial<Domain>,
     UpdateDto extends DeepPartial<Domain>,
-    FindAllDto,
-    FindOneDto,
-    MyRepository extends Repository<Entity>> {
+    FindAllDto extends FindOptionsWhere<Entity>,
+    FindOneDto extends FindOptionsWhere<Entity>,
+    MyRepository extends Repository<Entity>
+> {
     
     private readonly mapper: CRUDMapper<
         Domain,

@@ -9,7 +9,7 @@ import {
 } from '@nestjs/graphql';
 import { GraphQLResolveInfo } from 'graphql';
 import { RelationMapper } from 'src/core/RelationMapper';
-import { DrinksService } from './drinks.service';
+import DrinksService from './drinks.service';
 import { CreateDrinkInput } from './dto/create-drink.input';
 import { GetDrinksInput } from './dto/get-drinks.input';
 import { UpdateDrinkInput } from './dto/update-drink.input';
