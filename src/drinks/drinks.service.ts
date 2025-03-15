@@ -2,7 +2,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CRUDService, CRUDServiceOptions } from 'src/core/CRUDService';
+import { CRUDService } from 'src/core/CRUDService';
 import { GetByIdDto } from 'src/core/dto/get-by-id.dto';
 import { DrinksMapper } from './drinks.mapper';
 import { CreateDrinkInput } from './dto/create-drink.input';
@@ -12,7 +12,8 @@ import { Drink } from './entities/drink.graphql.entity';
 import { DrinkEntity } from './entities/drink.typeorm.entity';
 import { DrinksRepository } from './persistence/drinks.repository';
 
-const drinkServiceOptions: CRUDServiceOptions<
+@Injectable()
+export class DrinksService extends CRUDService<
   Drink,
   DrinkEntity,
   CreateDrinkInput,
@@ -20,19 +21,7 @@ const drinkServiceOptions: CRUDServiceOptions<
   GetDrinksInput,
   GetByIdDto,
   DrinksRepository
-> = {
-  domain: Drink,
-  entity: DrinkEntity,
-  createDto: CreateDrinkInput,
-  updateDto: UpdateDrinkInput,
-  findAllDto: GetDrinksInput,
-  findOneDto: GetByIdDto,
-  repository: DrinksRepository,
-  mapper: DrinksMapper,
-}
-
-@Injectable()
-export class DrinksService extends CRUDService<Drink, DrinkEntity, CreateDrinkInput, UpdateDrinkInput, GetDrinksInput, GetByIdDto, DrinksRepository> {
+> {
   async checkRelationsBeforeQuery(): Promise<boolean> {
     return true;
   }
@@ -41,6 +30,10 @@ export class DrinksService extends CRUDService<Drink, DrinkEntity, CreateDrinkIn
     @InjectRepository(DrinkEntity)
     repository: DrinksRepository
   ) {
-    super(drinkServiceOptions, repository);
+    super({
+      domain: Drink,
+      repository: DrinksRepository,
+      mapper: DrinksMapper
+    }, repository);
   }
 }

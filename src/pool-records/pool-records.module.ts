@@ -1,5 +1,6 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PoolRecordEntriesModule } from 'src/pool-record-entries';
 import { PoolEntity } from 'src/pools/entities/pool.typeorm.entity';
 import { PoolsModule } from 'src/pools/pools.module';
 import { PoolRecordEntity } from './entities/pool-record.typeorm.entity';
@@ -8,7 +9,7 @@ import { PoolRecordsResolver } from './pool-records.resolver';
 import { PoolRecordsService } from './pool-records.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PoolRecordEntity, PoolEntity]), PoolsModule],
+  imports: [TypeOrmModule.forFeature([PoolRecordEntity, PoolEntity]), PoolsModule, forwardRef(() => PoolRecordEntriesModule)],
   providers: [PoolRecordsResolver, PoolRecordsService, PoolRecordsRepository],
   exports: [PoolRecordsRepository]
 })

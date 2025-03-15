@@ -1,27 +1,19 @@
 import { CRUDMapper } from "src/core/CRUDMapper";
-import { DeepPartial, FindOptionsWhere } from "typeorm";
+import { GetByIdDto } from "src/core/dto/get-by-id.dto";
+import { DeepPartial } from "typeorm";
 import { CreateBeverageInput } from "./dto/create-beverage.input";
 import { Beverage } from "./entities/beverage.graphql.entity";
 import { BeverageEntity } from "./entities/beverage.typeorm.entity";
 
 
-export class BeverageMapper extends CRUDMapper<Beverage, BeverageEntity, CreateBeverageInput, Beverage, Beverage, Beverage> {
-    async createDtoToDomain(createDto: CreateBeverageInput): Promise<Beverage> {
-        throw new Error("Method not implemented.");
-    }
-
-    async updateDtoToDomain(updateDto: Beverage): Promise<Beverage> {
-        throw new Error("Method not implemented.");
-    }
-
-    async findAllDtoToEntity(findDto: Beverage): Promise<FindOptionsWhere<BeverageEntity>> {
-        throw new Error("Method not implemented.");
-    }
-
-    async findOneDtoToEntity(findOneDto: Beverage): Promise<FindOptionsWhere<BeverageEntity>> {
-        throw new Error("Method not implemented.");
-    }
-
+export class BeverageMapper extends CRUDMapper<
+    Beverage,
+    BeverageEntity,
+    CreateBeverageInput,
+    Beverage,
+    Beverage,
+    GetByIdDto
+> {
     async entityToDomain(entity: BeverageEntity): Promise<Beverage> {
         return {
             ...entity

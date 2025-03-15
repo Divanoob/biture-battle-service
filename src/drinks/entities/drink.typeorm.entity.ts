@@ -35,6 +35,16 @@ export class DrinkEntity {
   alcoholQuantity: number;
 
   @ManyToMany(() => PoolEntity, (pool) => pool.drinks)
-  @JoinTable()
+  @JoinTable({
+    name: 'drinks_pools',
+    joinColumn: {
+      name: 'drink',
+      referencedColumnName: 'id'
+    },
+    inverseJoinColumn: {
+      name: 'pool',
+      referencedColumnName: 'id'
+    }
+  })
   pools?: PoolEntity[];
 }

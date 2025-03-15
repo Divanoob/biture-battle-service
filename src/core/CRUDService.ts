@@ -13,11 +13,6 @@ export interface CRUDServiceOptions<
     MyRepository extends Repository<Entity>
 > {
     domain: Type<Domain>;
-    entity: Type<Entity>;
-    createDto: Type<CreateDto>;
-    updateDto: Type<UpdateDto>;
-    findAllDto: Type<FindAllDto>;
-    findOneDto: Type<FindOneDto>;
     repository: Type<MyRepository>;
     mapper: Type<CRUDMapper<
         Domain,

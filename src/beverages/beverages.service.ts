@@ -1,33 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CRUDService, CRUDServiceOptions } from 'src/core/CRUDService';
+import { CRUDService, GetByIdDto } from 'src/core';
 import { BeverageMapper } from './beverage.mapper';
-import { CreateBeverageInput } from './dto/create-beverage.input';
-import { FindAllBeveragesInput } from './dto/find-all-beverages.input';
-import { FindOneBeverageInput } from './dto/find-one-beverage.input';
-import { UpdateBeverageInput } from './dto/update-beverage.input';
-import { Beverage } from './entities/beverage.graphql.entity';
-import { BeverageEntity } from './entities/beverage.typeorm.entity';
+import { CreateBeverageInput, FindAllBeveragesInput, UpdateBeverageInput } from './dto';
+import { Beverage, BeverageEntity } from './entities';
 import { BeveragesRepository } from './persistence/beverages.repository';
-
-const exportServiceOptions: CRUDServiceOptions<
-  Beverage,
-  BeverageEntity,
-  CreateBeverageInput,
-  UpdateBeverageInput,
-  FindAllBeveragesInput,
-  FindOneBeverageInput,
-  BeveragesRepository
-> = {
-  domain: Beverage,
-  entity: BeverageEntity,
-  createDto: CreateBeverageInput,
-  updateDto: UpdateBeverageInput,
-  findAllDto: FindAllBeveragesInput,
-  findOneDto: FindOneBeverageInput,
-  repository: BeveragesRepository,
-  mapper: BeverageMapper,
-}
 
 @Injectable()
 export class BeveragesService extends CRUDService<
@@ -36,7 +13,7 @@ export class BeveragesService extends CRUDService<
   CreateBeverageInput,
   UpdateBeverageInput,
   FindAllBeveragesInput,
-  FindOneBeverageInput,
+  GetByIdDto,
   BeveragesRepository
 > {
   
@@ -45,6 +22,10 @@ export class BeveragesService extends CRUDService<
   }
 
   constructor(@InjectRepository(BeverageEntity) repository: BeveragesRepository) {
-    super(exportServiceOptions, repository);
+    super({
+      domain: Beverage,
+      repository: BeveragesRepository,
+      mapper: BeverageMapper
+    }, repository);
   }
 }

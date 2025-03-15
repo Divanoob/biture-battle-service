@@ -1,52 +1,35 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CRUDService, CRUDServiceOptions } from 'src/core/CRUDService';
-import { GetByIdDto } from 'src/core/dto/get-by-id.dto';
-import { CreatePoolRecordEntryInput } from './dto/create-pool-record-entry.input';
-import { GetPoolRecordEntriesInput } from './dto/get-pool-record.entry.input';
-import { UpdatePoolRecordEntryInput } from './dto/update-pool-record-entry.input';
-import { PoolRecordEntry } from './entities/pool-record-entry.graphql.entity';
-import { PoolRecordEntryEntity } from './entities/pool-record-entry.typeorm.entity';
+import { DrinkEntity } from 'src/drinks';
+import { DrinksRepository } from 'src/drinks/persistence/drinks.repository';
+import { CreatePoolRecordEntryInput } from './dto';
+import { PoolRecordEntryEntity } from './entities';
 import { PoolRecordEntriesRepository } from './persistence/pool-record-entries.repository';
-import { PoolRecordEntriesMapper } from './pool-record-entries.mapper';
 
-const poolRecordEntryServiceOptions: CRUDServiceOptions<
-  PoolRecordEntry,
-  PoolRecordEntryEntity,
-  CreatePoolRecordEntryInput,
-  UpdatePoolRecordEntryInput,
-  GetPoolRecordEntriesInput,
-  GetByIdDto,
-  PoolRecordEntriesRepository
-> = {
-  domain: PoolRecordEntry,
-  entity: PoolRecordEntryEntity,
-  createDto: CreatePoolRecordEntryInput,
-  updateDto: UpdatePoolRecordEntryInput,
-  findAllDto: GetPoolRecordEntriesInput,
-  findOneDto: GetByIdDto,
-  repository: PoolRecordEntriesRepository,
-  mapper: PoolRecordEntriesMapper,
-}
 
 @Injectable()
-export class PoolRecordEntriesService extends CRUDService<
-  PoolRecordEntry,
-  PoolRecordEntryEntity,
-  CreatePoolRecordEntryInput,
-  UpdatePoolRecordEntryInput,
-  GetPoolRecordEntriesInput,
-  GetByIdDto,
-  PoolRecordEntriesRepository>{
+export class PoolRecordEntriesService {
   
   constructor(
     @InjectRepository(PoolRecordEntryEntity)
-    repository: PoolRecordEntriesRepository
-  ) {
-    super(poolRecordEntryServiceOptions, repository);
-  }
+    private readonly repository: PoolRecordEntriesRepository,
+    @Inject()
+    private readonly drinksRepository: DrinksRepository
+  ) {}
   
-  async checkRelationsBeforeQuery(): Promise<boolean> {
-    return true;
+  async create({ record, pool, user }: CreatePoolRecordEntryInput): Promise<PoolRecordEntryEntity> {
+    // retrieve user drinks registered in the pool
+    const drinks: DrinkEntity[] = await this.drinksRepository
+      .createQueryBuilder()
+      .select('alcoholQuantity')
+      .from(DrinkEntity, 'drinks')
+      .where('drinks.user = :user', { user: user.id })
+      .innerJoin('drinks.pools', 'pool', 'pool.id = :pool', { pool: pool.id })
+      .getMany();
+    // sum stats
+    const alcoholQuantity = drinks.reduce((acc, drink) => acc + drink.alcoholQuantity, 0);
+    // calculate user alcohol level
+    const alcoholLevel = 0; //TODO : calculate alcohol level
+    return await this.repository.save({ record, user, alcoholLevel, alcoholQuantity });
   }
 }
