@@ -1,8 +1,9 @@
-import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, InputType, Int, ObjectType } from '@nestjs/graphql';
 import { Pool } from 'src/pools/entities/pool.graphql.entity';
 import { User } from 'src/users/entities/user.graphql.entity';
 
 @ObjectType()
+@InputType("DrinkInput")
 export class Drink {
   @Field(() => Int, { description: 'Drink ID' })
   id: number;

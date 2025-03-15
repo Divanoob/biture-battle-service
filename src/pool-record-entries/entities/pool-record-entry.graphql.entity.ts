@@ -1,8 +1,9 @@
-import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ID, InputType, ObjectType } from '@nestjs/graphql';
 import { PoolRecord } from 'src/pool-records/entities/pool-record.graphql.entity';
 import { User } from 'src/users/entities/user.graphql.entity';
 
 @ObjectType()
+@InputType("PoolRecordEntryInput")
 export class PoolRecordEntry {
   @Field(() => ID, { description: 'Pool Record Entry ID' })
   id: number;

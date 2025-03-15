@@ -8,28 +8,28 @@ import { UsersService } from './users.service';
 
 @Resolver(() => User)
 export class UsersResolver {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly service: UsersService) {}
 
   @Mutation(() => User)
   async createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
-    return await this.usersService.create(createUserInput);
+    return await this.service.create(createUserInput);
   }
 
   @Query(() => [User], { name: 'users' })
   async findAll(@Args() userDto: GetUsersInput) {
-    return await this.usersService.findAll(userDto);
+    return await this.service.findAll(userDto);
   }
 
   @Query(() => User, { name: 'user' })
   async findOne(@Args('id', { type: () => Int }) id: number) {
-    return await this.usersService.findOne(id);
+    return await this.service.findOne(id);
   }
 
   @Mutation(() => Boolean)
   async updateUserName(
     @Args('updateUserNameInput') updateUserNameInput: UpdateUserNameInput,
   ) {
-    return await this.usersService.updateName(
+    return await this.service.updateName(
       updateUserNameInput.id,
       updateUserNameInput,
     );
@@ -40,7 +40,7 @@ export class UsersResolver {
     @Args('updateUserPasswordInput')
     updateUserPasswordInput: UpdateUserPasswordInput,
   ) {
-    return await this.usersService.updatePassword(
+    return await this.service.updatePassword(
       updateUserPasswordInput.id,
       updateUserPasswordInput,
     );
@@ -48,6 +48,6 @@ export class UsersResolver {
 
   @Mutation(() => Boolean)
   async removeUser(@Args('id', { type: () => Int }) id: number) {
-    return await this.usersService.remove(id);
+    return await this.service.remove(id);
   }
 }

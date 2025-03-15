@@ -1,9 +1,10 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, InputType, ObjectType } from '@nestjs/graphql';
 import { Drink } from 'src/drinks/entities/drink.graphql.entity';
 import { PoolRecord } from 'src/pool-records/entities/pool-record.graphql.entity';
 import { User } from 'src/users/entities/user.graphql.entity';
 
 @ObjectType()
+@InputType("PoolInput")
 export class Pool {
   @Field(() => ID, { description: 'Pool ID' })
   id: number;
