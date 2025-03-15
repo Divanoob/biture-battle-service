@@ -1,24 +1,38 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { GeneratePoolRecordInput } from './dto/generate-pool-record.input';
-import { PoolRecord } from './entities/pool-record.graphql.entity';
+import { Inject } from '@nestjs/common';
+import { Args, Info, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { GraphQLResolveInfo } from 'graphql';
+import { RelationMapper } from 'src/core';
+import { FindAllPoolRecordsInput, GeneratePoolRecordInput } from './dto';
+import { PoolRecord, PoolRecordEntity } from './entities';
 import { PoolRecordsService } from './pool-records.service';
 
 @Resolver(() => PoolRecord)
 export class PoolRecordsResolver {
-  constructor(private readonly service: PoolRecordsService) {}
+  constructor(
+    @Inject() private readonly service: PoolRecordsService, 
+    @Inject() private readonly relationMapper: RelationMapper<PoolRecordEntity>
+  ) { }
 
   @Mutation(() => PoolRecord)
-  generatePoolRecord(@Args('generatePoolRecordInput') generatePoolRecordInput: GeneratePoolRecordInput) {
+  generatePoolRecord(
+    @Args('generatePoolRecordInput') generatePoolRecordInput: GeneratePoolRecordInput
+  ) {
     return this.service.generatePoolRecords(generatePoolRecordInput);
   }
 
   @Query(() => [PoolRecord], { name: 'poolRecords' })
-  findAll() {
-    return this.service.findAll();
+  findAll(
+    @Args('findAllPoolRecordsInput') findAllPoolRecordsInput: FindAllPoolRecordsInput,
+    @Info() info: GraphQLResolveInfo,
+  ) {
+    return this.service.findAll(findAllPoolRecordsInput, this.relationMapper.map(PoolRecordEntity, info));
   }
 
   @Query(() => PoolRecord, { name: 'poolRecord' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.service.findOne(id);
+  findOne(
+    @Args('id', { type: () => Int }) id: number,
+    @Info() info: GraphQLResolveInfo,
+  ) {
+    return this.service.findOne({ id }, this.relationMapper.map(PoolRecordEntity, info));
   }
 }

@@ -47,7 +47,7 @@ export class PoolRecordEntriesMapper extends CRUDMapper<
         }
         let record: PoolRecord | undefined = undefined;
         if (entity.record) {
-            const poolRecordsMapper = new PoolRecordsMapper();
+            const poolRecordsMapper = new PoolRecordsMapper({ domain: PoolRecord });
             record = await poolRecordsMapper.entityToDomain(entity.record);
         }
         return {

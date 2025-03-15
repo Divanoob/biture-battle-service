@@ -10,6 +10,9 @@ export class PoolEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Column()
+    name: string;
+
     @ManyToMany(() => UserEntity, user => user.pools)
     @JoinTable()
     users?: UserEntity[];

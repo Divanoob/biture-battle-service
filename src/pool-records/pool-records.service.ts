@@ -1,23 +1,34 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CRUDService, GetByIdDto } from 'src/core';
 import { PoolRecordEntriesService, PoolRecordEntryEntity } from 'src/pool-record-entries';
-import { PoolEntity } from 'src/pools';
 import { PoolsRepository } from 'src/pools/persistence/pools.repository';
-import { GeneratePoolRecordInput } from './dto';
+import { FindAllPoolRecordsInput, GeneratePoolRecordInput } from './dto';
 import { PoolRecord, PoolRecordEntity } from './entities';
 import { PoolRecordsRepository } from './persistence/pool-records.repository';
+import { PoolRecordsMapper } from './pool-records.mapper';
 
 @Injectable()
-export class PoolRecordsService {
+export class PoolRecordsService extends CRUDService<
+  PoolRecord,
+  PoolRecordEntity,
+  PoolRecord,
+  PoolRecord,
+  FindAllPoolRecordsInput,
+  GetByIdDto,
+  PoolRecordsRepository
+> {
+  async checkRelationsBeforeQuery(): Promise<boolean> {
+    return true;
+  }
 
   constructor(
-    @InjectRepository(PoolRecordEntity)
-    private readonly repository: PoolRecordsRepository,
-    @InjectRepository(PoolEntity)
-    private readonly poolRepository: PoolsRepository,
-    @Inject()
-    private readonly poolRecordEntriesService: PoolRecordEntriesService
-  ) { }
+    @InjectRepository(PoolRecordEntity) repository: PoolRecordsRepository,
+    @Inject() private readonly poolRepository: PoolsRepository,
+    @Inject(forwardRef(() => PoolRecordEntriesService)) private readonly poolRecordEntriesService: PoolRecordEntriesService
+  ) {
+    super({ domain: PoolRecord, mapper: PoolRecordsMapper, repository});
+  }
 
   async generatePoolRecords(generateDto: GeneratePoolRecordInput): Promise<PoolRecord> {
     const pool = await this.poolRepository.findOne({ where: { id: generateDto.poolId }, relations: { users: true } });
@@ -33,15 +44,4 @@ export class PoolRecordsService {
     return poolRecord;
   }
 
-  async findAll(): Promise<PoolRecord[]> {
-    return this.repository.find();
-  }
-
-  async findOne(id: number): Promise<PoolRecord> {
-    const record = await this.repository.findOne({ where: { id } });
-    if (!record) {
-      throw new BadRequestException('This record doesn\'t exist.');
-    }
-    return record;
-  }
 }

@@ -1,15 +1,20 @@
-import { BaseMapper } from "src/core/BaseMapper";
-import { PoolRecordEntry } from "src/pool-record-entries/entities/pool-record-entry.graphql.entity";
-import { PoolRecordEntriesMapper } from "src/pool-record-entries/pool-record-entries.mapper";
-import { Pool } from "src/pools/entities/pool.graphql.entity";
-import { PoolsMapper } from "src/pools/pools.mapper";
+import { CRUDMapper, GetByIdDto } from "src/core";
+import { PoolRecordEntriesMapper, PoolRecordEntry } from "src/pool-record-entries";
+import { Pool, PoolsMapper } from "src/pools";
 import { DeepPartial } from "typeorm";
-import { PoolRecord } from "./entities/pool-record.graphql.entity";
-import { PoolRecordEntity } from "./entities/pool-record.typeorm.entity";
+import { FindAllPoolRecordsInput } from "./dto";
+import { PoolRecord, PoolRecordEntity } from "./entities";
 
 
 
-export class PoolRecordsMapper extends BaseMapper<PoolRecord, PoolRecordEntity> {
+export class PoolRecordsMapper extends CRUDMapper<
+    PoolRecord,
+    PoolRecordEntity,
+    PoolRecord,
+    PoolRecord,
+    FindAllPoolRecordsInput,
+    GetByIdDto
+> {
 
     async entityToDomain(entity: PoolRecordEntity): Promise<PoolRecord> {
         let entries: PoolRecordEntry[] | undefined = undefined;

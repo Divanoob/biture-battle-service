@@ -13,7 +13,7 @@ export interface CRUDServiceOptions<
     MyRepository extends Repository<Entity>
 > {
     domain: Type<Domain>;
-    repository: Type<MyRepository>;
+    repository: MyRepository;
     mapper: Type<CRUDMapper<
         Domain,
         Entity,
@@ -34,7 +34,7 @@ export abstract class CRUDService<
     MyRepository extends Repository<Entity>
 > {
     
-    private readonly mapper: CRUDMapper<
+    protected readonly mapper: CRUDMapper<
         Domain,
         Entity,
         CreateDto,
@@ -43,8 +43,10 @@ export abstract class CRUDService<
         FindOneDto
     >;
     
+    protected readonly repository: MyRepository;
+    
     constructor(
-        { mapper, domain }: CRUDServiceOptions<
+        { mapper, domain, repository }: CRUDServiceOptions<
             Domain,
             Entity,
             CreateDto,
@@ -52,10 +54,10 @@ export abstract class CRUDService<
             FindAllDto,
             FindOneDto,
             MyRepository
-        >,
-        private readonly repository: MyRepository
+        >
     ) {
-        this.mapper = new mapper({ domain});
+        this.mapper = new mapper({ domain });
+        this.repository = repository;
     }
 
     abstract checkRelationsBeforeQuery(): Promise<boolean>;

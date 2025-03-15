@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePoolInput } from './dto/create-pool.input';
-import { UpdatePoolInput } from './dto/update-pool.input';
+import { CreatePoolInput, UpdatePoolInput } from './dto';
 
 @Injectable()
 export class PoolsService {

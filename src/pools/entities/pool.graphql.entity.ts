@@ -8,6 +8,9 @@ import { User } from 'src/users/entities/user.graphql.entity';
 export class Pool {
   @Field(() => ID, { description: 'Pool ID' })
   id: number;
+
+  @Field({ description: "Pool Name" })
+  name: string;
   
   @Field(() => [User], { description: 'Users', nullable: true })
   users?: User[];

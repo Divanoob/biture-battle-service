@@ -1,14 +1,18 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CreateUserInput } from './dto/create-user.input';
-import { GetUsersInput } from './dto/get-users.input';
-import { UpdateUserNameInput } from './dto/update-user-name.input';
-import { UpdateUserPasswordInput } from './dto/update-user-password.input';
-import { User } from './entities/user.graphql.entity';
+import { Inject } from '@nestjs/common';
+import { Args, Info, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { GraphQLResolveInfo } from 'graphql';
+import { RelationMapper } from 'src/core';
+import { CreateUserInput, GetUsersInput, UpdateUserNameInput, UpdateUserPasswordInput } from './dto';
+import { User, UserEntity } from './entities';
 import { UsersService } from './users.service';
 
 @Resolver(() => User)
 export class UsersResolver {
-  constructor(private readonly service: UsersService) {}
+  constructor(
+    @Inject() private readonly service: UsersService,
+    @Inject()
+    private readonly relationMapper: RelationMapper<UserEntity>
+  ) { }
 
   @Mutation(() => User)
   async createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
@@ -16,13 +20,19 @@ export class UsersResolver {
   }
 
   @Query(() => [User], { name: 'users' })
-  async findAll(@Args() userDto: GetUsersInput) {
-    return await this.service.findAll(userDto);
+  async findAll(
+    @Args() userDto: GetUsersInput,
+    @Info() info: GraphQLResolveInfo,
+  ) {
+    return await this.service.findAll(userDto, this.relationMapper.map(UserEntity, info));
   }
 
   @Query(() => User, { name: 'user' })
-  async findOne(@Args('id', { type: () => Int }) id: number) {
-    return await this.service.findOne(id);
+  async findOne(
+    @Args('id', { type: () => Int }) id: number,
+    @Info() info: GraphQLResolveInfo
+  ) {
+    return await this.service.findOne({ id }, this.relationMapper.map(UserEntity, info));
   }
 
   @Mutation(() => Boolean)
@@ -48,6 +58,6 @@ export class UsersResolver {
 
   @Mutation(() => Boolean)
   async removeUser(@Args('id', { type: () => Int }) id: number) {
-    return await this.service.remove(id);
+    return await this.service.remove({ id });
   }
 }

@@ -32,8 +32,8 @@ export class DrinksService extends CRUDService<
   ) {
     super({
       domain: Drink,
-      repository: DrinksRepository,
+      repository: repository,
       mapper: DrinksMapper
-    }, repository);
+    });
   }
 }

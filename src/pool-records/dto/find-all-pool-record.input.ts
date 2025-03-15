@@ -1,6 +1,10 @@
-import { ArgsType } from "@nestjs/graphql";
+import { ArgsType, Field, InputType } from "@nestjs/graphql";
 
 
 
 @ArgsType()
-export class FindAllPoolRecordsInput {}
+@InputType("FindAllPoolRecordsInput")
+export class FindAllPoolRecordsInput {
+    @Field({ nullable: true })
+    recordDate?: Date;
+}

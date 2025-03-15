@@ -24,8 +24,8 @@ export class BeveragesService extends CRUDService<
   constructor(@InjectRepository(BeverageEntity) repository: BeveragesRepository) {
     super({
       domain: Beverage,
-      repository: BeveragesRepository,
+      repository,
       mapper: BeverageMapper
-    }, repository);
+    });
   }
 }

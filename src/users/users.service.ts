@@ -5,24 +5,35 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
-import { CreateUserInput } from './dto/create-user.input';
-import { GetUsersInput } from './dto/get-users.input';
-import { UpdateUserNameInput } from './dto/update-user-name.input';
-import { UpdateUserPasswordInput } from './dto/update-user-password.input';
-import { User } from './entities/user.graphql.entity';
-import { UserEntity } from './entities/user.typeorm.entity';
+import { CRUDService, GetByIdDto } from 'src/core';
+import { CreateUserInput, GetUsersInput, UpdateUserNameInput, UpdateUserPasswordInput } from './dto';
+import { User, UserEntity } from './entities';
 import { UsersRepository } from './persistence/users.repository';
 import { UsersMapper } from './users.mapper';
 
 @Injectable()
-export class UsersService {
-  private readonly mapper: UsersMapper;
+export class UsersService extends CRUDService<
+  User,
+  UserEntity,
+  CreateUserInput,
+  User,
+  GetUsersInput,
+  GetByIdDto,
+  UsersRepository
+> {
+  async checkRelationsBeforeQuery(): Promise<boolean> {
+    return true;
+  }
 
   constructor(
     @InjectRepository(UserEntity)
-    private readonly repository: UsersRepository,
+    repository: UsersRepository,
   ) {
-    this.mapper = new UsersMapper();
+    super({
+      repository,
+      domain: User,
+      mapper: UsersMapper
+    });
   }
 
   async create(createUserInput: CreateUserInput): Promise<User> {
@@ -39,20 +50,6 @@ export class UsersService {
       saltingRounds,
     );
     return this.mapper.entityToDomain(await this.repository.save(newEntity));
-  }
-
-  async findAll(userDto: GetUsersInput): Promise<User[]> {
-    return this.mapper.entitiesToDomains(
-      await this.repository.find({ where: userDto }),
-    );
-  }
-
-  async findOne(id: number): Promise<User> {
-    const entity = await this.repository.findOneBy({ id });
-    if (entity === null) {
-      throw new NotFoundException();
-    }
-    return this.mapper.entityToDomain(entity);
   }
 
   async updatePassword(
@@ -83,10 +80,5 @@ export class UsersService {
     entity.name = updateUserNameInput.name;
     await this.repository.save(entity);
     return true;
-  }
-
-  async remove(id: number): Promise<boolean> {
-    const deleteResult = await this.repository.delete({ id });
-    return !!deleteResult.affected && deleteResult.affected > 0;
   }
 }

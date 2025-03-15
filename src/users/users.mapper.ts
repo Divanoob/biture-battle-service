@@ -1,11 +1,24 @@
-import { BaseMapper } from "src/core/BaseMapper";
+import { CRUDMapper, GetByIdDto } from "src/core";
 import { DeepPartial } from "typeorm";
+import { CreateUserInput } from "./dto/create-user.input";
+import { GetUsersInput } from "./dto/get-users.input";
 import { User } from "./entities/user.graphql.entity";
 import { UserEntity } from "./entities/user.typeorm.entity";
 
 
 
-export class UsersMapper extends BaseMapper<User, UserEntity> {
+export class UsersMapper extends CRUDMapper<
+    User,
+    UserEntity,
+    CreateUserInput,
+    User,
+    GetUsersInput,
+    GetByIdDto
+    > {
+    
+    constructor() {
+        super({ domain: User });
+    }
 
     async entityToDomain(entity: UserEntity): Promise<User> {
         return {

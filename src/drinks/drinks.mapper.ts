@@ -20,6 +20,11 @@ export class DrinksMapper extends CRUDMapper<
     GetDrinksInput,
     GetByIdDto
 > {
+    
+    constructor() {
+        super({ domain: Drink });
+    }
+    
     async entityToDomain(entity: DrinkEntity): Promise<Drink> {
         let user: User | undefined = undefined;
         if (entity.user) {
