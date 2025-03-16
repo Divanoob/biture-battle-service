@@ -6,7 +6,7 @@ import { User } from "src/users/entities/user.graphql.entity";
 import { UsersMapper } from "src/users/users.mapper";
 import { DeepPartial, FindOptionsWhere } from "typeorm";
 import { CreatePoolRecordEntryInput } from "./dto/create-pool-record-entry.input";
-import { GetPoolRecordEntriesInput } from "./dto/get-pool-record.entry.input";
+import { FindAllPoolRecordEntriesInput } from "./dto/find-all-pool-record-entry.input";
 import { UpdatePoolRecordEntryInput } from "./dto/update-pool-record-entry.input";
 import { PoolRecordEntry } from "./entities/pool-record-entry.graphql.entity";
 import { PoolRecordEntryEntity } from "./entities/pool-record-entry.typeorm.entity";
@@ -17,7 +17,7 @@ export class PoolRecordEntriesMapper extends CRUDMapper<
     PoolRecordEntryEntity,
     CreatePoolRecordEntryInput,
     UpdatePoolRecordEntryInput,
-    GetPoolRecordEntriesInput,
+    FindAllPoolRecordEntriesInput,
     GetByIdDto
 > {
     
@@ -31,7 +31,7 @@ export class PoolRecordEntriesMapper extends CRUDMapper<
         return { ...poolRecordEntry, ...updateDto };
     }
 
-    async findAllDtoToEntity(findDto: GetPoolRecordEntriesInput): Promise<FindOptionsWhere<PoolRecordEntryEntity>> {
+    async findAllDtoToEntity(findDto: FindAllPoolRecordEntriesInput): Promise<FindOptionsWhere<PoolRecordEntryEntity>> {
         return findDto;
     }
 

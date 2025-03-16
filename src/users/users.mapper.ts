@@ -1,18 +1,16 @@
 import { CRUDMapper, GetByIdDto } from "src/core";
 import { DeepPartial } from "typeorm";
 import { CreateUserInput } from "./dto/create-user.input";
-import { GetUsersInput } from "./dto/get-users.input";
+import { FindAllUsersInput } from "./dto/find-all-users.input";
 import { User } from "./entities/user.graphql.entity";
 import { UserEntity } from "./entities/user.typeorm.entity";
-
-
 
 export class UsersMapper extends CRUDMapper<
     User,
     UserEntity,
     CreateUserInput,
     User,
-    GetUsersInput,
+    FindAllUsersInput,
     GetByIdDto
     > {
     

@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 import { Args, Info, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GraphQLResolveInfo } from 'graphql';
 import { RelationMapper } from 'src/core';
-import { CreateUserInput, GetUsersInput, UpdateUserNameInput, UpdateUserPasswordInput } from './dto';
+import { CreateUserInput, FindAllUsersInput, UpdateUserNameInput, UpdateUserPasswordInput } from './dto';
 import { User, UserEntity } from './entities';
 import { UsersService } from './users.service';
 
@@ -21,7 +21,7 @@ export class UsersResolver {
 
   @Query(() => [User], { name: 'users' })
   async findAll(
-    @Args() userDto: GetUsersInput,
+    @Args() userDto: FindAllUsersInput,
     @Info() info: GraphQLResolveInfo,
   ) {
     return await this.service.findAll(userDto, this.relationMapper.map(UserEntity, info));

@@ -1,4 +1,5 @@
 import { ArgsType, Field, InputType } from "@nestjs/graphql";
+import { Pool } from "src/pools";
 
 
 
@@ -7,4 +8,7 @@ import { ArgsType, Field, InputType } from "@nestjs/graphql";
 export class FindAllPoolRecordsInput {
     @Field({ nullable: true })
     recordDate?: Date;
+
+    @Field({ nullable: true })
+    pool?: Pool;
 }

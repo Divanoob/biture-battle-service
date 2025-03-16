@@ -3,5 +3,4 @@ import { Repository } from "typeorm";
 import { PoolEntity } from "../entities/pool.typeorm.entity";
 
 @Injectable()
-export class PoolsRepository extends Repository<PoolEntity> {
-}
+export class PoolsRepository extends Repository<PoolEntity> { }

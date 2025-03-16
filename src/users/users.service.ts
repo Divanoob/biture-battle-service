@@ -1,3 +1,4 @@
+/* eslint-disable @darraghor/nestjs-typed/injectable-should-be-provided */
 import {
   BadRequestException,
   Injectable,
@@ -6,9 +7,9 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { CRUDService, GetByIdDto } from 'src/core';
-import { CreateUserInput, GetUsersInput, UpdateUserNameInput, UpdateUserPasswordInput } from './dto';
+import { CreateUserInput, FindAllUsersInput, UpdateUserNameInput, UpdateUserPasswordInput } from './dto';
 import { User, UserEntity } from './entities';
-import { UsersRepository } from './persistence/users.repository';
+import { UsersRepository } from './persistence';
 import { UsersMapper } from './users.mapper';
 
 @Injectable()
@@ -17,7 +18,7 @@ export class UsersService extends CRUDService<
   UserEntity,
   CreateUserInput,
   User,
-  GetUsersInput,
+  FindAllUsersInput,
   GetByIdDto,
   UsersRepository
 > {

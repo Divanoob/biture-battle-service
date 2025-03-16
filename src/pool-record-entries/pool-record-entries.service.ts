@@ -7,7 +7,7 @@ import { PoolRecordsService } from 'src/pool-records';
 import { PoolsService } from 'src/pools';
 import { UsersService } from 'src/users';
 import { CreatePoolRecordEntryInput } from './dto';
-import { GetPoolRecordEntriesInput } from './dto/get-pool-record.entry.input';
+import { FindAllPoolRecordEntriesInput } from './dto/find-all-pool-record-entry.input';
 import { UpdatePoolRecordEntryInput } from './dto/update-pool-record-entry.input';
 import { PoolRecordEntry, PoolRecordEntryEntity } from './entities';
 import { PoolRecordEntriesRepository } from './persistence/pool-record-entries.repository';
@@ -20,7 +20,7 @@ export class PoolRecordEntriesService extends CRUDService<
   PoolRecordEntryEntity,
   CreatePoolRecordEntryInput,
   UpdatePoolRecordEntryInput,
-  GetPoolRecordEntriesInput,
+  FindAllPoolRecordEntriesInput,
   GetByIdDto,
   PoolRecordEntriesRepository
 > {

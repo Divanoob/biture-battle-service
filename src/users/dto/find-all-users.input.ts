@@ -1,7 +1,7 @@
 import { ArgsType, Field, ID } from '@nestjs/graphql';
 
 @ArgsType()
-export class GetUsersInput {
+export class FindAllUsersInput {
   @Field(() => ID, { description: 'Drink ID', nullable: true })
   id?: number;
 
