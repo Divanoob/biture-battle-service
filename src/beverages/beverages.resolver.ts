@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { Args, Info, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Info, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GraphQLResolveInfo } from 'graphql';
 import { RelationMapper } from 'src/core/RelationMapper';
 import { BeveragesService } from './beverages.service';
@@ -31,14 +31,14 @@ export class BeveragesResolver {
 
   @Query(() => Beverage, { name: 'beverage' })
   findOne(
-    @Args('id', { type: () => Int }) id: number,
+    @Args('id', { type: () => ID }) id: number,
     @Info() info: GraphQLResolveInfo
   ) {
     return this.beveragesService.findOne({ id }, this.relationMapper.map(BeverageEntity, info));
   }
 
   @Mutation(() => Beverage)
-  removeBeverage(@Args('id', { type: () => Int }) id: number) {
+  removeBeverage(@Args('id', { type: () => ID }) id: number) {
     return this.beveragesService.remove({ id });
   }
 }

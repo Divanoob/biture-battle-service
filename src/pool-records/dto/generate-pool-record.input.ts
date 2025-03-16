@@ -1,7 +1,8 @@
 import { Field, InputType } from '@nestjs/graphql';
+import { Pool } from 'src/pools';
 
 @InputType()
 export class GeneratePoolRecordInput {
-  @Field({ description: 'Pool ID' })
-  poolId: number;
+  @Field(() => Pool, { description: 'Pool ID' })
+  pool: Pool;
 }

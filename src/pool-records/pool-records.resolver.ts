@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { Args, Info, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Info, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GraphQLResolveInfo } from 'graphql';
 import { RelationMapper } from 'src/core';
 import { FindAllPoolRecordsInput, GeneratePoolRecordInput } from './dto';
@@ -30,7 +30,7 @@ export class PoolRecordsResolver {
 
   @Query(() => PoolRecord, { name: 'poolRecord' })
   findOne(
-    @Args('id', { type: () => Int }) id: number,
+    @Args('id', { type: () => ID }) id: number,
     @Info() info: GraphQLResolveInfo,
   ) {
     return this.service.findOne({ id }, this.relationMapper.map(PoolRecordEntity, info));

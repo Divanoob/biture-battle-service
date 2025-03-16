@@ -1,0 +1,326 @@
+type Beverage {
+  """Beverage ID"""
+  id: ID!
+
+  """Beverage Name"""
+  name: String!
+
+  """Alcohol Concentration"""
+  alcoholConcentration: Float!
+}
+
+type User {
+  """ID"""
+  id: ID!
+
+  """Name"""
+  name: String!
+
+  """E-Mail Address"""
+  email: String!
+}
+
+type PoolRecordEntry {
+  """Pool Record Entry ID"""
+  id: ID!
+
+  """User"""
+  user: User
+
+  """User Alcohol Level in g/L"""
+  alcoholLevel: Float!
+
+  """User Total Quantity of Alcohol in his body"""
+  alcoholQuantity: Float!
+
+  """Record"""
+  record: PoolRecord
+}
+
+type Drink {
+  """Drink ID"""
+  id: ID!
+
+  """User"""
+  user: User
+
+  """Date"""
+  date: DateTime!
+  drinkName: String
+  quantity: Float!
+  alcoholConcentration: Float!
+
+  """Alcohol Quantity"""
+  alcoholQuantity: Float!
+
+  """Pools"""
+  pools: [Pool!]
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Pool {
+  """Pool ID"""
+  id: ID!
+
+  """Pool Name"""
+  name: String!
+
+  """Users"""
+  users: [User!]
+
+  """Creation Date"""
+  creationDate: DateTime!
+
+  """Is the Pool Open"""
+  isOpen: Boolean!
+
+  """Drinks"""
+  drinks: [Drink!]
+
+  """Records"""
+  records: [PoolRecord!]
+}
+
+type PoolRecord {
+  """Pool Record ID"""
+  id: ID!
+
+  """Record Date"""
+  recordDate: DateTime!
+
+  """Pool Record Entries"""
+  entries: [PoolRecordEntry!]
+
+  """Pool"""
+  pool: [Pool!]
+}
+
+input BeverageInput {
+  """Beverage ID"""
+  id: ID!
+
+  """Beverage Name"""
+  name: String!
+
+  """Alcohol Concentration"""
+  alcoholConcentration: Float!
+}
+
+input UserInput {
+  """ID"""
+  id: ID!
+
+  """Name"""
+  name: String!
+
+  """E-Mail Address"""
+  email: String!
+}
+
+input PoolRecordEntryInput {
+  """Pool Record Entry ID"""
+  id: ID!
+
+  """User"""
+  user: UserInput
+
+  """User Alcohol Level in g/L"""
+  alcoholLevel: Float!
+
+  """User Total Quantity of Alcohol in his body"""
+  alcoholQuantity: Float!
+
+  """Record"""
+  record: PoolRecordInput
+}
+
+input DrinkInput {
+  """Drink ID"""
+  id: ID!
+
+  """User"""
+  user: UserInput
+
+  """Date"""
+  date: DateTime!
+  drinkName: String
+  quantity: Float!
+  alcoholConcentration: Float!
+
+  """Alcohol Quantity"""
+  alcoholQuantity: Float!
+
+  """Pools"""
+  pools: [PoolInput!]
+}
+
+input PoolInput {
+  """Pool ID"""
+  id: ID!
+
+  """Pool Name"""
+  name: String!
+
+  """Users"""
+  users: [UserInput!]
+
+  """Creation Date"""
+  creationDate: DateTime!
+
+  """Is the Pool Open"""
+  isOpen: Boolean!
+
+  """Drinks"""
+  drinks: [DrinkInput!]
+
+  """Records"""
+  records: [PoolRecordInput!]
+}
+
+input PoolRecordInput {
+  """Pool Record ID"""
+  id: ID!
+
+  """Record Date"""
+  recordDate: DateTime!
+
+  """Pool Record Entries"""
+  entries: [PoolRecordEntryInput!]
+
+  """Pool"""
+  pool: [PoolInput!]
+}
+
+type Query {
+  users(
+    """Drink ID"""
+    id: ID
+
+    """User Name"""
+    name: String
+
+    """Date"""
+    email: String
+  ): [User!]!
+  user(id: ID!): User!
+  beverages(
+    """Name"""
+    name: String
+  ): [Beverage!]!
+  beverage(id: ID!): Beverage!
+  pools(id: ID, name: String, users: [UserInput!], creationDate: DateTime, isOpen: Boolean): [Pool!]!
+  pool(id: ID!): Pool!
+  poolRecords(findAllPoolRecordsInput: FindAllPoolRecordsInput!): [PoolRecord!]!
+  poolRecord(id: ID!): PoolRecord!
+  drinks(
+    """Drink ID"""
+    id: ID
+
+    """User"""
+    user: UserInput
+
+    """Alcohol Quantity"""
+    alcoholQuantity: Float
+
+    """Date"""
+    date: DateTime
+  ): [Drink!]!
+  drink(id: ID!): Drink!
+}
+
+input FindAllPoolRecordsInput {
+  recordDate: DateTime
+  pool: PoolInput
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUserName(updateUserNameInput: UpdateUserNameInput!): Boolean!
+  updateUserPassword(updateUserPasswordInput: UpdateUserPasswordInput!): Boolean!
+  removeUser(id: ID!): Boolean!
+  createBeverage(createBeverageInput: CreateBeverageInput!): Beverage!
+  removeBeverage(id: ID!): Beverage!
+  createPool(createPoolInput: CreatePoolInput!): Pool!
+  updatePool(updatePoolInput: UpdatePoolInput!): Pool!
+  removePool(id: ID!): Pool!
+  generatePoolRecord(generatePoolRecordInput: GeneratePoolRecordInput!): PoolRecord!
+  createDrink(createDrinkInput: CreateDrinkInput!): Drink!
+  updateDrink(updateDrinkInput: UpdateDrinkInput!): Boolean!
+  removeDrink(id: ID!): Boolean!
+}
+
+input CreateUserInput {
+  """User Name"""
+  name: String!
+
+  """E-Mail"""
+  email: String!
+
+  """Non Encrypted Password"""
+  password: String!
+}
+
+input UpdateUserNameInput {
+  id: ID!
+
+  """User Name"""
+  name: String!
+}
+
+input UpdateUserPasswordInput {
+  id: ID!
+
+  """Non Encrypted Password"""
+  password: String!
+}
+
+input CreateBeverageInput {
+  """Beverage Name"""
+  name: String!
+
+  """Alcohol Concentration"""
+  alcoholConcentration: Float!
+}
+
+input CreatePoolInput {
+  """Pool Name"""
+  name: String!
+}
+
+input UpdatePoolInput {
+  """Pool Name"""
+  name: String
+  id: ID!
+}
+
+input GeneratePoolRecordInput {
+  """Pool ID"""
+  pool: PoolInput!
+}
+
+input CreateDrinkInput {
+  """User"""
+  user: UserInput!
+
+  """Alcohol Quantity"""
+  alcoholQuantity: Float!
+
+  """Date and Hour"""
+  date: DateTime!
+}
+
+input UpdateDrinkInput {
+  """User"""
+  user: UserInput
+
+  """Alcohol Quantity"""
+  alcoholQuantity: Float
+
+  """Date and Hour"""
+  date: DateTime
+  id: ID!
+}

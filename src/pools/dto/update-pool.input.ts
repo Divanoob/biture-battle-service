@@ -1,8 +1,8 @@
+import { Field, ID, InputType, PartialType } from '@nestjs/graphql';
 import { CreatePoolInput } from './create-pool.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
 
 @InputType()
 export class UpdatePoolInput extends PartialType(CreatePoolInput) {
-  @Field(() => Int)
+  @Field(() => ID)
   id: number;
 }

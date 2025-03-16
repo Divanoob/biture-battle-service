@@ -1,8 +1,8 @@
 import { Inject } from '@nestjs/common';
 import {
   Args,
+  ID,
   Info,
-  Int,
   Mutation,
   Query,
   Resolver
@@ -44,7 +44,7 @@ export class DrinksResolver {
 
   @Query(() => Drink, { name: 'drink' })
   async drink(
-    @Args('id', { type: () => Int }) id: number,
+    @Args('id', { type: () => ID }) id: number,
     @Info() info: GraphQLResolveInfo,
   ) {
     return await this.drinksService.findOne(
@@ -64,7 +64,7 @@ export class DrinksResolver {
   }
 
   @Mutation(() => Boolean)
-  async removeDrink(@Args('id', { type: () => Int }) id: number) {
+  async removeDrink(@Args('id', { type: () => ID }) id: number) {
     return await this.drinksService.remove({ id });
   }
 }

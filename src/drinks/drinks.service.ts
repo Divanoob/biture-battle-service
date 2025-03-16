@@ -39,8 +39,8 @@ export class DrinksService extends CRUDService<
   }
   
   async checkRelationsBeforeQuery(dto: CreateDrinkInput | UpdateDrinkInput): Promise<boolean> {
-    if (dto.userId) {
-      await this.userService.findOne({ id: dto.userId }, {});
+    if (dto.user) {
+      await this.userService.findOne({ id: dto.user.id }, {});
     }
     return true;
   }

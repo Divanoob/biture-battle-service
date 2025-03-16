@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { Args, Info, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Info, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GraphQLResolveInfo } from 'graphql';
 import { RelationMapper } from 'src/core';
 import { CreateUserInput, FindAllUsersInput, UpdateUserNameInput, UpdateUserPasswordInput } from './dto';
@@ -29,7 +29,7 @@ export class UsersResolver {
 
   @Query(() => User, { name: 'user' })
   async findOne(
-    @Args('id', { type: () => Int }) id: number,
+    @Args('id', { type: () => ID }) id: number,
     @Info() info: GraphQLResolveInfo
   ) {
     return await this.service.findOne({ id }, this.relationMapper.map(UserEntity, info));
@@ -57,7 +57,9 @@ export class UsersResolver {
   }
 
   @Mutation(() => Boolean)
-  async removeUser(@Args('id', { type: () => Int }) id: number) {
+  async removeUser(
+    @Args('id', { type: () => ID }) id: number
+  ) {
     return await this.service.remove({ id });
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @darraghor/nestjs-typed/injectable-should-be-provided */
 import { BadRequestException, forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CRUDService, GetByIdDto } from 'src/core';
@@ -31,9 +32,12 @@ export class PoolRecordsService extends CRUDService<
   }
 
   async generatePoolRecords(generateDto: GeneratePoolRecordInput): Promise<PoolRecord> {
-    const pool = await this.poolRepository.findOne({ where: { id: generateDto.poolId }, relations: { users: true } });
-    if (!pool?.users) {
+    const pool = await this.poolRepository.findOne({ where: { id: generateDto.pool.id }, relations: { users: true } });
+    if (!pool) {
       throw new BadRequestException('This pool doesn\'t exist.');
+    }
+    if (!pool.users || pool.users.length === 0) {
+      throw new BadRequestException('This pool has no members.');
     }
     const poolRecord = await this.repository.save({ recordDate: new Date(), pool });
     //generate entries

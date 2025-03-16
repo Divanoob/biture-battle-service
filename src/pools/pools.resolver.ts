@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { Args, Info, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Info, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GraphQLResolveInfo } from 'graphql';
 import { RelationMapper } from 'src/core';
 import { CreatePoolInput, FindAllPoolInput, UpdatePoolInput } from './dto';
@@ -29,7 +29,7 @@ export class PoolsResolver {
 
   @Query(() => Pool, { name: 'pool' })
   async findOne(
-    @Args('id', { type: () => Int }) id: number,
+    @Args('id', { type: () => ID }) id: number,
     @Info() info: GraphQLResolveInfo
   ) {
     return this.service.findOne({ id }, this.relationMapper.map(PoolEntity, info));
@@ -41,7 +41,7 @@ export class PoolsResolver {
   }
 
   @Mutation(() => Pool)
-  removePool(@Args('id', { type: () => Int }) id: number) {
+  removePool(@Args('id', { type: () => ID }) id: number) {
     return this.service.remove({ id });
   }
 }
