@@ -10,11 +10,11 @@ import {
 } from 'typeorm';
 import { GraphRelationBuilder } from 'typeorm-relations-graphql';
 
-export type MappedRelations<T> = FindOptionsRelations<T>;
+export type MappedRelations<Entity> = FindOptionsRelations<Entity>;
 
 @Injectable()
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class RelationMapper<T extends Record<string, any>> {
+export class RelationMapper<Entity extends Record<string, any>> {
   private graphRelationBuilder: GraphRelationBuilder;
 
   constructor(@InjectDataSource() dataSource: DataSource) {
@@ -22,10 +22,10 @@ export class RelationMapper<T extends Record<string, any>> {
   }
 
   map(
-    entity: string | ObjectType<T> | EntitySchema<T>,
+    entity: string | ObjectType<Entity> | EntitySchema<Entity>,
     info: GraphQLResolveInfo,
-  ): MappedRelations<T> {
-    const relationMap = this.graphRelationBuilder.buildForQuery<T>(
+  ): MappedRelations<Entity> {
+    const relationMap = this.graphRelationBuilder.buildForQuery<Entity>(
       entity,
       info,
     );

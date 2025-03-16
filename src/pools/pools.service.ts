@@ -1,25 +1,36 @@
+/* eslint-disable @darraghor/nestjs-typed/injectable-should-be-provided */
 import { Injectable } from '@nestjs/common';
-import { CreatePoolInput, UpdatePoolInput } from './dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CRUDService, GetByIdDto } from 'src/core';
+import { PoolsMapper } from '.';
+import { CreatePoolInput, FindAllPoolInput, UpdatePoolInput } from './dto';
+import { Pool, PoolEntity } from './entities';
+import { PoolsRepository } from './persistence/pools.repository';
 
 @Injectable()
-export class PoolsService {
-  create(createPoolInput: CreatePoolInput) {
-    return 'This action adds a new pool';
-  }
+export class PoolsService extends CRUDService<
+  Pool,
+  PoolEntity,
+  CreatePoolInput,
+  UpdatePoolInput,
+  FindAllPoolInput,
+  GetByIdDto,
+  PoolsRepository
+> {
 
-  findAll() {
-    return `This action returns all pools`;
+  constructor(
+    @InjectRepository(PoolEntity)
+    repository: PoolsRepository
+  ) {
+    super({
+      domain: Pool,
+      repository,
+      mapper: PoolsMapper
+    });
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} pool`;
+  
+  async checkRelationsBeforeQuery(): Promise<boolean> {
+    return true;
   }
-
-  update(id: number, updatePoolInput: UpdatePoolInput) {
-    return `This action updates a #${id} pool`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} pool`;
-  }
+  
 }

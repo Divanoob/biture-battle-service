@@ -1,34 +1,47 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CreatePoolInput, UpdatePoolInput } from './dto';
+import { Inject } from '@nestjs/common';
+import { Args, Info, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { GraphQLResolveInfo } from 'graphql';
+import { RelationMapper } from 'src/core';
+import { CreatePoolInput, FindAllPoolInput, UpdatePoolInput } from './dto';
+import { PoolEntity } from './entities';
 import { Pool } from './entities/pool.graphql.entity';
 import { PoolsService } from './pools.service';
 
 @Resolver(() => Pool)
 export class PoolsResolver {
-  constructor(private readonly poolsService: PoolsService) {}
+  constructor(
+    @Inject() private readonly service: PoolsService,
+    @Inject() private readonly relationMapper: RelationMapper<PoolEntity>
+  ) { }
 
   @Mutation(() => Pool)
   createPool(@Args('createPoolInput') createPoolInput: CreatePoolInput) {
-    return this.poolsService.create(createPoolInput);
+    return this.service.create(createPoolInput);
   }
 
   @Query(() => [Pool], { name: 'pools' })
-  findAll() {
-    return this.poolsService.findAll();
+  findAll(
+    @Args() dto: FindAllPoolInput,
+    @Info() info: GraphQLResolveInfo
+  ) {
+    return this.service.findAll(dto, this.relationMapper.map(PoolEntity, info));
   }
 
   @Query(() => Pool, { name: 'pool' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.poolsService.findOne(id);
+  async findOne(
+    @Args('id', { type: () => Int }) id: number,
+    @Info() info: GraphQLResolveInfo
+  ) {
+    return this.service.findOne({ id }, this.relationMapper.map(PoolEntity, info));
   }
 
   @Mutation(() => Pool)
   updatePool(@Args('updatePoolInput') updatePoolInput: UpdatePoolInput) {
-    return this.poolsService.update(updatePoolInput.id, updatePoolInput);
+    return this.service.update({ id: updatePoolInput.id }, updatePoolInput);
   }
 
   @Mutation(() => Pool)
   removePool(@Args('id', { type: () => Int }) id: number) {
-    return this.poolsService.remove(id);
+    return this.service.remove({ id });
   }
 }

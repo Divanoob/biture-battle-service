@@ -60,12 +60,14 @@ export abstract class CRUDService<
         this.repository = repository;
     }
 
-    abstract checkRelationsBeforeQuery(): Promise<boolean>;
+    abstract checkRelationsBeforeQuery(dto: CreateDto | UpdateDto): Promise<boolean>;
     
     async create(createDto: CreateDto): Promise<Domain> {
-        const entity = this.repository.create(await this.mapper.createDtoToEntity(createDto));
+        const entity = this.repository.create(
+            await this.mapper.createDtoToEntity(createDto)
+        );
         //Expands
-        await this.checkRelationsBeforeQuery();
+        await this.checkRelationsBeforeQuery(createDto);
         //Do the Insert
         const newEntity = await this.repository.save({ ...entity });
         return this.mapper.entityToDomain(newEntity);
@@ -75,9 +77,10 @@ export abstract class CRUDService<
         findAllDto: FindAllDto,
         relations: MappedRelations<Entity>,
     ): Promise<Domain[]> {
+        const where = await this.mapper.findAllDtoToEntity(findAllDto);
         const drinks = await this.repository.find({
             relations,
-            where: await this.mapper.findAllDtoToEntity(findAllDto),
+            where,
         });
         return this.mapper.entitiesToDomains(drinks);
     }
@@ -86,8 +89,9 @@ export abstract class CRUDService<
         findOneDto: FindOneDto,
         relations: MappedRelations<Entity>,
     ): Promise<Domain> {
+        const where = await this.mapper.findOneDtoToEntity(findOneDto);
         const entity = await this.repository.findOne({
-            where: await this.mapper.findOneDtoToEntity(findOneDto),
+            where,
             relations,
         });
         if (entity === null) {
@@ -100,20 +104,22 @@ export abstract class CRUDService<
         findOneDto: FindOneDto,
         updateDto: UpdateDto,
     ): Promise<boolean> {
-        //Retrieve current entitty
+        //Retrieve current entity
         const entity = await this.repository.findOneBy(await this.mapper.findOneDtoToEntity(findOneDto));
         if (entity === null) {
             throw new NotFoundException();
         }
         //Expands
-        await this.checkRelationsBeforeQuery();
+        await this.checkRelationsBeforeQuery(updateDto);
         //Do the update
         await this.repository.save({ ...entity, ...updateDto });
         return true;
     }
 
     async remove(findOneDto: FindOneDto): Promise<boolean> {
-        const deleteResult = await this.repository.delete(await this.mapper.findOneDtoToEntity(findOneDto));
+        const deleteResult = await this.repository.delete(
+            await this.mapper.findOneDtoToEntity(findOneDto)
+        );
         return !!deleteResult.affected && deleteResult.affected > 0;
     }
 }
